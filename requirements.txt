@@ -1,0 +1,28 @@
+# Core
+numpy
+pandas
+scipy
+
+# Machine Learning
+scikit-learn
+xgboost
+lightgbm
+
+# Explainable AI
+shap
+lime
+eli5
+
+# Visualization
+matplotlib
+seaborn
+plotly
+
+# Jupyter / Experimentation
+jupyter
+notebook
+ipykernel
+
+# Utilities
+tqdm
+joblib

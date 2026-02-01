@@ -1,0 +1,10 @@
+{
+  "sensitive_attribute": "age_bucket",
+  "age_bucket_counts": {
+    "31-50": 88,
+    "<=30": 83,
+    ">50": 29
+  },
+  "demographic_parity_difference": 0.21371851040525738,
+  "equalized_odds_difference": 0.19117647058823528
+}

@@ -1,0 +1,126 @@
+{
+  "rows": 800,
+  "columns": 10,
+  "target": null,
+  "dtypes": {
+    "Unnamed: 0": "int64",
+    "Age": "int64",
+    "Sex": "object",
+    "Job": "int64",
+    "Housing": "object",
+    "Saving accounts": "object",
+    "Checking account": "object",
+    "Credit amount": "int64",
+    "Duration": "int64",
+    "Purpose": "object"
+  },
+  "missingness_percent_top": {
+    "Checking account": 40.375,
+    "Saving accounts": 18.625
+  },
+  "numeric_summary": {
+    "Unnamed: 0": {
+      "count": 800.0,
+      "mean": 497.41875,
+      "std": 289.5115447899199,
+      "min": 0.0,
+      "25%": 241.75,
+      "50%": 493.5,
+      "75%": 750.25,
+      "max": 999.0
+    },
+    "Age": {
+      "count": 800.0,
+      "mean": 35.55875,
+      "std": 11.411587481527743,
+      "min": 19.0,
+      "25%": 27.0,
+      "50%": 33.0,
+      "75%": 42.0,
+      "max": 75.0
+    },
+    "Job": {
+      "count": 800.0,
+      "mean": 1.93,
+      "std": 0.6543203870896898,
+      "min": 0.0,
+      "25%": 2.0,
+      "50%": 2.0,
+      "75%": 2.0,
+      "max": 3.0
+    },
+    "Credit amount": {
+      "count": 800.0,
+      "mean": 3360.61875,
+      "std": 2898.174862791682,
+      "min": 250.0,
+      "25%": 1380.0,
+      "50%": 2333.0,
+      "75%": 4154.5,
+      "max": 18424.0
+    },
+    "Duration": {
+      "count": 800.0,
+      "mean": 21.095,
+      "std": 11.807211262497447,
+      "min": 4.0,
+      "25%": 12.0,
+      "50%": 18.0,
+      "75%": 24.0,
+      "max": 60.0
+    }
+  },
+  "top_abs_correlations": [
+    {
+      "col1": "Credit amount",
+      "col2": "Duration",
+      "abs_corr": 0.6264104917274059
+    },
+    {
+      "col1": "Job",
+      "col2": "Credit amount",
+      "abs_corr": 0.2811540650719218
+    },
+    {
+      "col1": "Job",
+      "col2": "Duration",
+      "abs_corr": 0.21907605188554954
+    },
+    {
+      "col1": "Age",
+      "col2": "Duration",
+      "abs_corr": 0.04679202759539947
+    },
+    {
+      "col1": "Age",
+      "col2": "Credit amount",
+      "abs_corr": 0.031826062749220965
+    },
+    {
+      "col1": "Age",
+      "col2": "Job",
+      "abs_corr": 0.025861546018418537
+    },
+    {
+      "col1": "Unnamed: 0",
+      "col2": "Age",
+      "abs_corr": 0.02550158609968011
+    },
+    {
+      "col1": "Unnamed: 0",
+      "col2": "Job",
+      "abs_corr": 0.021337272054655666
+    },
+    {
+      "col1": "Unnamed: 0",
+      "col2": "Duration",
+      "abs_corr": 0.019143011472778755
+    },
+    {
+      "col1": "Unnamed: 0",
+      "col2": "Credit amount",
+      "abs_corr": 0.007256243084044437
+    }
+  ],
+  "suggested_sensitive_columns": []
+}

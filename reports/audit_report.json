@@ -1,0 +1,224 @@
+{
+  "generated_at": "2026-01-29T09:01:03.538955Z",
+  "artifacts": {
+    "dataset_profile": {
+      "rows": 800,
+      "columns": 10,
+      "target": null,
+      "dtypes": {
+        "Unnamed: 0": "int64",
+        "Age": "int64",
+        "Sex": "object",
+        "Job": "int64",
+        "Housing": "object",
+        "Saving accounts": "object",
+        "Checking account": "object",
+        "Credit amount": "int64",
+        "Duration": "int64",
+        "Purpose": "object"
+      },
+      "missingness_percent_top": {
+        "Checking account": 40.375,
+        "Saving accounts": 18.625
+      },
+      "numeric_summary": {
+        "Unnamed: 0": {
+          "count": 800.0,
+          "mean": 497.41875,
+          "std": 289.5115447899199,
+          "min": 0.0,
+          "25%": 241.75,
+          "50%": 493.5,
+          "75%": 750.25,
+          "max": 999.0
+        },
+        "Age": {
+          "count": 800.0,
+          "mean": 35.55875,
+          "std": 11.411587481527743,
+          "min": 19.0,
+          "25%": 27.0,
+          "50%": 33.0,
+          "75%": 42.0,
+          "max": 75.0
+        },
+        "Job": {
+          "count": 800.0,
+          "mean": 1.93,
+          "std": 0.6543203870896898,
+          "min": 0.0,
+          "25%": 2.0,
+          "50%": 2.0,
+          "75%": 2.0,
+          "max": 3.0
+        },
+        "Credit amount": {
+          "count": 800.0,
+          "mean": 3360.61875,
+          "std": 2898.174862791682,
+          "min": 250.0,
+          "25%": 1380.0,
+          "50%": 2333.0,
+          "75%": 4154.5,
+          "max": 18424.0
+        },
+        "Duration": {
+          "count": 800.0,
+          "mean": 21.095,
+          "std": 11.807211262497447,
+          "min": 4.0,
+          "25%": 12.0,
+          "50%": 18.0,
+          "75%": 24.0,
+          "max": 60.0
+        }
+      },
+      "top_abs_correlations": [
+        {
+          "col1": "Credit amount",
+          "col2": "Duration",
+          "abs_corr": 0.6264104917274059
+        },
+        {
+          "col1": "Job",
+          "col2": "Credit amount",
+          "abs_corr": 0.2811540650719218
+        },
+        {
+          "col1": "Job",
+          "col2": "Duration",
+          "abs_corr": 0.21907605188554954
+        },
+        {
+          "col1": "Age",
+          "col2": "Duration",
+          "abs_corr": 0.04679202759539947
+        },
+        {
+          "col1": "Age",
+          "col2": "Credit amount",
+          "abs_corr": 0.031826062749220965
+        },
+        {
+          "col1": "Age",
+          "col2": "Job",
+          "abs_corr": 0.025861546018418537
+        },
+        {
+          "col1": "Unnamed: 0",
+          "col2": "Age",
+          "abs_corr": 0.02550158609968011
+        },
+        {
+          "col1": "Unnamed: 0",
+          "col2": "Job",
+          "abs_corr": 0.021337272054655666
+        },
+        {
+          "col1": "Unnamed: 0",
+          "col2": "Duration",
+          "abs_corr": 0.019143011472778755
+        },
+        {
+          "col1": "Unnamed: 0",
+          "col2": "Credit amount",
+          "abs_corr": 0.007256243084044437
+        }
+      ],
+      "suggested_sensitive_columns": []
+    },
+    "model_metrics": {
+      "accuracy": 0.735,
+      "classification_report": {
+        "0.0": {
+          "precision": 0.7919463087248322,
+          "recall": 0.8428571428571429,
+          "f1-score": 0.8166089965397924,
+          "support": 140.0
+        },
+        "1.0": {
+          "precision": 0.5686274509803921,
+          "recall": 0.48333333333333334,
+          "f1-score": 0.5225225225225225,
+          "support": 60.0
+        },
+        "accuracy": 0.735,
+        "macro avg": {
+          "precision": 0.6802868798526122,
+          "recall": 0.6630952380952381,
+          "f1-score": 0.6695657595311575,
+          "support": 200.0
+        },
+        "weighted avg": {
+          "precision": 0.7249506514015002,
+          "recall": 0.735,
+          "f1-score": 0.7283830543346115,
+          "support": 200.0
+        }
+      },
+      "roc_auc": 0.7988095238095239
+    },
+    "explainability": {
+      "mean_abs_shap": {
+        "duration": 0.6655877828598022,
+        "credit_amount": 0.7626460194587708,
+        "installment_commitment": 0.24453988671302795,
+        "residence_since": 0.11872535943984985,
+        "age": 0.3209208548069,
+        "existing_credits": 0.1507773995399475,
+        "num_dependents": 0.06470122188329697,
+        "checking_status__0": 0.2916417419910431,
+        "checking_status___200": 0.06593099236488342,
+        "checking_status_no_checking": 0.8869892954826355,
+        "credit_history_critical_other_existing_credit": 0.3938179314136505,
+        "credit_history_delayed_previously": 0.07210862636566162,
+        "credit_history_existing_paid": 0.07019153237342834,
+        "credit_history_no_credits_all_paid": 0.05765180289745331,
+        "purpose_domestic_appliance": 0.0,
+        "purpose_education": 0.10753419995307922,
+        "purpose_furniture_equipment": 0.08578228205442429,
+        "purpose_new_car": 0.1770520657300949,
+        "purpose_other": 0.0,
+        "purpose_radio_tv": 0.08927047997713089,
+        "purpose_repairs": 0.0,
+        "purpose_retraining": 0.0,
+        "purpose_used_car": 0.21341848373413086,
+        "savings_status_500__X_1000": 0.010729334317147732,
+        "savings_status__100": 0.23705722391605377,
+        "savings_status___1000": 0.06852112710475922,
+        "savings_status_no_known_savings": 0.19454464316368103,
+        "employment_4__X_7": 0.19933781027793884,
+        "employment__1": 0.2473732829093933,
+        "employment___7": 0.04108183830976486,
+        "employment_unemployed": 0.0725310742855072,
+        "personal_status_male_div_sep": 0.044833723455667496,
+        "personal_status_male_mar_wid": 0.02743646316230297,
+        "personal_status_male_single": 0.1901310384273529,
+        "other_parties_guarantor": 0.143262580037117,
+        "other_parties_none": 0.04577350243926048,
+        "property_magnitude_life_insurance": 0.06129790470004082,
+        "property_magnitude_no_known_property": 0.1696552038192749,
+        "property_magnitude_real_estate": 0.11860659718513489,
+        "other_payment_plans_none": 0.33045119047164917,
+        "other_payment_plans_stores": 0.014716964215040207,
+        "housing_own": 0.0792645812034607,
+        "housing_rent": 0.09995514154434204,
+        "job_skilled": 0.08274456858634949,
+        "job_unemp_unskilled_non_res": 0.0,
+        "job_unskilled_resident": 0.04791933670639992,
+        "own_telephone_yes": 0.14695900678634644,
+        "foreign_worker_yes": 0.02395031228661537
+      }
+    },
+    "fairness": {
+      "sensitive_attribute": "age_bucket",
+      "age_bucket_counts": {
+        "31-50": 88,
+        "<=30": 83,
+        ">50": 29
+      },
+      "demographic_parity_difference": 0.21371851040525738,
+      "equalized_odds_difference": 0.19117647058823528
+    }
+  }
+}
