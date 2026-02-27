@@ -1,783 +1,271 @@
 {
-  "generated_at": "2026-02-10T10:53:13.147782Z",
+  "generated_at": "2026-02-27T16:00:30.229277Z",
   "artifacts": {
     "dataset_profile": {
-      "rows": 800,
-      "columns": 10,
-      "target": null,
+      "rows": 1000,
+      "columns": 21,
+      "target": "default",
+      "target_counts": {
+        "good": 700,
+        "bad": 300
+      },
       "dtypes": {
-        "Unnamed: 0": "int64",
-        "Age": "int64",
-        "Sex": "object",
-        "Job": "int64",
-        "Housing": "object",
-        "Saving accounts": "object",
-        "Checking account": "object",
-        "Credit amount": "int64",
-        "Duration": "int64",
-        "Purpose": "object"
+        "checking_status": "object",
+        "duration": "int64",
+        "credit_history": "object",
+        "purpose": "object",
+        "credit_amount": "int64",
+        "savings_status": "object",
+        "employment": "object",
+        "installment_commitment": "int64",
+        "personal_status": "object",
+        "other_parties": "object",
+        "residence_since": "int64",
+        "property_magnitude": "object",
+        "age": "int64",
+        "other_payment_plans": "object",
+        "housing": "object",
+        "existing_credits": "int64",
+        "job": "object",
+        "num_dependents": "int64",
+        "own_telephone": "object",
+        "foreign_worker": "object",
+        "default": "object"
       },
-      "missingness_percent_top": {
-        "Checking account": 40.375,
-        "Saving accounts": 18.625
-      },
+      "missingness_percent_top": {},
       "numeric_summary": {
-        "Unnamed: 0": {
-          "count": 800.0,
-          "mean": 497.41875,
-          "std": 289.5115447899199,
-          "min": 0.0,
-          "25%": 241.75,
-          "50%": 493.5,
-          "75%": 750.25,
-          "max": 999.0
+        "duration": {
+          "count": 1000.0,
+          "mean": 20.903,
+          "std": 12.058814452756375,
+          "min": 4.0,
+          "25%": 12.0,
+          "50%": 18.0,
+          "75%": 24.0,
+          "max": 72.0
         },
-        "Age": {
-          "count": 800.0,
-          "mean": 35.55875,
-          "std": 11.411587481527743,
+        "credit_amount": {
+          "count": 1000.0,
+          "mean": 3271.258,
+          "std": 2822.7368759604406,
+          "min": 250.0,
+          "25%": 1365.5,
+          "50%": 2319.5,
+          "75%": 3972.25,
+          "max": 18424.0
+        },
+        "installment_commitment": {
+          "count": 1000.0,
+          "mean": 2.973,
+          "std": 1.1187146743126786,
+          "min": 1.0,
+          "25%": 2.0,
+          "50%": 3.0,
+          "75%": 4.0,
+          "max": 4.0
+        },
+        "residence_since": {
+          "count": 1000.0,
+          "mean": 2.845,
+          "std": 1.1037178956568536,
+          "min": 1.0,
+          "25%": 2.0,
+          "50%": 3.0,
+          "75%": 4.0,
+          "max": 4.0
+        },
+        "age": {
+          "count": 1000.0,
+          "mean": 35.546,
+          "std": 11.375468574317512,
           "min": 19.0,
           "25%": 27.0,
           "50%": 33.0,
           "75%": 42.0,
           "max": 75.0
         },
-        "Job": {
-          "count": 800.0,
-          "mean": 1.93,
-          "std": 0.6543203870896898,
-          "min": 0.0,
-          "25%": 2.0,
-          "50%": 2.0,
+        "existing_credits": {
+          "count": 1000.0,
+          "mean": 1.407,
+          "std": 0.5776544682461002,
+          "min": 1.0,
+          "25%": 1.0,
+          "50%": 1.0,
           "75%": 2.0,
-          "max": 3.0
+          "max": 4.0
         },
-        "Credit amount": {
-          "count": 800.0,
-          "mean": 3360.61875,
-          "std": 2898.174862791682,
-          "min": 250.0,
-          "25%": 1380.0,
-          "50%": 2333.0,
-          "75%": 4154.5,
-          "max": 18424.0
-        },
-        "Duration": {
-          "count": 800.0,
-          "mean": 21.095,
-          "std": 11.807211262497447,
-          "min": 4.0,
-          "25%": 12.0,
-          "50%": 18.0,
-          "75%": 24.0,
-          "max": 60.0
+        "num_dependents": {
+          "count": 1000.0,
+          "mean": 1.155,
+          "std": 0.36208577175319395,
+          "min": 1.0,
+          "25%": 1.0,
+          "50%": 1.0,
+          "75%": 1.0,
+          "max": 2.0
         }
       },
       "top_abs_correlations": [
         {
-          "col1": "Credit amount",
-          "col2": "Duration",
-          "abs_corr": 0.6264104917274059
+          "col1": "duration",
+          "col2": "credit_amount",
+          "abs_corr": 0.6249841983009851
         },
         {
-          "col1": "Job",
-          "col2": "Credit amount",
-          "abs_corr": 0.2811540650719218
+          "col1": "credit_amount",
+          "col2": "installment_commitment",
+          "abs_corr": 0.271315701246002
         },
         {
-          "col1": "Job",
-          "col2": "Duration",
-          "abs_corr": 0.21907605188554954
+          "col1": "residence_since",
+          "col2": "age",
+          "abs_corr": 0.266419183969461
         },
         {
-          "col1": "Age",
-          "col2": "Duration",
-          "abs_corr": 0.04679202759539947
+          "col1": "age",
+          "col2": "existing_credits",
+          "abs_corr": 0.14925358219009058
         },
         {
-          "col1": "Age",
-          "col2": "Credit amount",
-          "abs_corr": 0.031826062749220965
+          "col1": "age",
+          "col2": "num_dependents",
+          "abs_corr": 0.11820083281906714
         },
         {
-          "col1": "Age",
-          "col2": "Job",
-          "abs_corr": 0.025861546018418537
+          "col1": "existing_credits",
+          "col2": "num_dependents",
+          "abs_corr": 0.10966670041593389
         },
         {
-          "col1": "Unnamed: 0",
-          "col2": "Age",
-          "abs_corr": 0.02550158609968011
+          "col1": "residence_since",
+          "col2": "existing_credits",
+          "abs_corr": 0.08962523262254277
         },
         {
-          "col1": "Unnamed: 0",
-          "col2": "Job",
-          "abs_corr": 0.021337272054655666
+          "col1": "duration",
+          "col2": "installment_commitment",
+          "abs_corr": 0.07474881629117033
         },
         {
-          "col1": "Unnamed: 0",
-          "col2": "Duration",
-          "abs_corr": 0.019143011472778755
+          "col1": "installment_commitment",
+          "col2": "num_dependents",
+          "abs_corr": 0.0712069430082334
         },
         {
-          "col1": "Unnamed: 0",
-          "col2": "Credit amount",
-          "abs_corr": 0.007256243084044437
+          "col1": "installment_commitment",
+          "col2": "age",
+          "abs_corr": 0.0582656843514099
+        },
+        {
+          "col1": "installment_commitment",
+          "col2": "residence_since",
+          "abs_corr": 0.04930237081388658
+        },
+        {
+          "col1": "residence_since",
+          "col2": "num_dependents",
+          "abs_corr": 0.04264342597522536
+        },
+        {
+          "col1": "duration",
+          "col2": "age",
+          "abs_corr": 0.03613637401909835
+        },
+        {
+          "col1": "duration",
+          "col2": "residence_since",
+          "abs_corr": 0.03406720161114831
+        },
+        {
+          "col1": "credit_amount",
+          "col2": "age",
+          "abs_corr": 0.032716416665448014
+        },
+        {
+          "col1": "credit_amount",
+          "col2": "residence_since",
+          "abs_corr": 0.028926323080232533
+        },
+        {
+          "col1": "duration",
+          "col2": "num_dependents",
+          "abs_corr": 0.023834475397621752
+        },
+        {
+          "col1": "installment_commitment",
+          "col2": "existing_credits",
+          "abs_corr": 0.0216687425713283
+        },
+        {
+          "col1": "credit_amount",
+          "col2": "existing_credits",
+          "abs_corr": 0.020794551748965877
+        },
+        {
+          "col1": "credit_amount",
+          "col2": "num_dependents",
+          "abs_corr": 0.017142154158463888
         }
       ],
-      "suggested_sensitive_columns": []
+      "suggested_sensitive_columns": [
+        "age"
+      ]
     },
     "model_metrics": {
-      "accuracy": 0.735,
+      "accuracy": 0.73,
+      "tuned_accuracy": 0.755,
       "classification_report": {
         "0.0": {
-          "precision": 0.7919463087248322,
-          "recall": 0.8428571428571429,
-          "f1-score": 0.8166089965397924,
-          "support": 140.0
-        },
-        "1.0": {
-          "precision": 0.5686274509803921,
-          "recall": 0.48333333333333334,
-          "f1-score": 0.5225225225225225,
+          "precision": 0.5517241379310345,
+          "recall": 0.5333333333333333,
+          "f1-score": 0.5423728813559322,
           "support": 60.0
         },
-        "accuracy": 0.735,
+        "1.0": {
+          "precision": 0.8028169014084507,
+          "recall": 0.8142857142857143,
+          "f1-score": 0.8085106382978723,
+          "support": 140.0
+        },
+        "accuracy": 0.73,
         "macro avg": {
-          "precision": 0.6802868798526122,
-          "recall": 0.6630952380952381,
-          "f1-score": 0.6695657595311575,
+          "precision": 0.6772705196697426,
+          "recall": 0.6738095238095239,
+          "f1-score": 0.6754417598269022,
           "support": 200.0
         },
         "weighted avg": {
-          "precision": 0.7249506514015002,
-          "recall": 0.735,
-          "f1-score": 0.7283830543346115,
+          "precision": 0.7274890723652259,
+          "recall": 0.73,
+          "f1-score": 0.7286693112152903,
           "support": 200.0
         }
       },
-      "roc_auc": 0.7988095238095239
+      "roc_auc": 0.7576190476190476,
+      "optimal_threshold": 0.3852057109557109
     },
     "explainability": {
       "mean_abs_shap": {
-        "duration": 0.6655877828598022,
-        "credit_amount": 0.7626460194587708,
-        "installment_commitment": 0.24453988671302795,
-        "residence_since": 0.11872535943984985,
-        "age": 0.3209208548069,
-        "existing_credits": 0.1507773995399475,
-        "num_dependents": 0.06470122188329697,
-        "checking_status__0": 0.2916417419910431,
-        "checking_status___200": 0.06593099236488342,
-        "checking_status_no_checking": 0.8869892954826355,
-        "credit_history_critical_other_existing_credit": 0.3938179314136505,
-        "credit_history_delayed_previously": 0.07210862636566162,
-        "credit_history_existing_paid": 0.07019153237342834,
-        "credit_history_no_credits_all_paid": 0.05765180289745331,
-        "purpose_domestic_appliance": 0.0,
-        "purpose_education": 0.10753419995307922,
-        "purpose_furniture_equipment": 0.08578228205442429,
-        "purpose_new_car": 0.1770520657300949,
-        "purpose_other": 0.0,
-        "purpose_radio_tv": 0.08927047997713089,
-        "purpose_repairs": 0.0,
-        "purpose_retraining": 0.0,
-        "purpose_used_car": 0.21341848373413086,
-        "savings_status_500__X_1000": 0.010729334317147732,
-        "savings_status__100": 0.23705722391605377,
-        "savings_status___1000": 0.06852112710475922,
-        "savings_status_no_known_savings": 0.19454464316368103,
-        "employment_4__X_7": 0.19933781027793884,
-        "employment__1": 0.2473732829093933,
-        "employment___7": 0.04108183830976486,
-        "employment_unemployed": 0.0725310742855072,
-        "personal_status_male_div_sep": 0.044833723455667496,
-        "personal_status_male_mar_wid": 0.02743646316230297,
-        "personal_status_male_single": 0.1901310384273529,
-        "other_parties_guarantor": 0.143262580037117,
-        "other_parties_none": 0.04577350243926048,
-        "property_magnitude_life_insurance": 0.06129790470004082,
-        "property_magnitude_no_known_property": 0.1696552038192749,
-        "property_magnitude_real_estate": 0.11860659718513489,
-        "other_payment_plans_none": 0.33045119047164917,
-        "other_payment_plans_stores": 0.014716964215040207,
-        "housing_own": 0.0792645812034607,
-        "housing_rent": 0.09995514154434204,
-        "job_skilled": 0.08274456858634949,
-        "job_unemp_unskilled_non_res": 0.0,
-        "job_unskilled_resident": 0.04791933670639992,
-        "own_telephone_yes": 0.14695900678634644,
-        "foreign_worker_yes": 0.02395031228661537
+        "checking_status_no_checking": 0.6737560033798218,
+        "credit_per_duration": 0.4189951419830322,
+        "credit_per_age": 0.3528904616832733,
+        "years_to_repay_ratio": 0.35141605138778687,
+        "credit_history_critical_other_existing_credit": 0.30032575130462646,
+        "purpose_new_car": 0.25607144832611084,
+        "savings_status__100": 0.2548190653324127,
+        "credit_amount": 0.2445547878742218,
+        "other_payment_plans_none": 0.24411530792713165,
+        "checking_status__0": 0.2427055388689041
       }
     },
     "fairness": {
-      "sensitive_attribute": "age_bucket",
-      "age_bucket_counts": {
-        "31-50": 88,
-        "<=30": 83,
-        ">50": 29
-      },
-      "demographic_parity_difference": 0.21371851040525738,
-      "equalized_odds_difference": 0.19117647058823528
+      "demographic_parity_difference": 0.5024432308134521,
+      "equalized_odds_difference": 0.76
     },
     "trajectory": {
-      "meta": {
-        "preds_rows": 200,
-        "train_rows": 800
-      },
-      "psi": {
-        "duration": 0.03766389728021024,
-        "credit_amount": 0.08857703877892195,
-        "installment_commitment": 0.02413394857644273,
-        "residence_since": 0.014625433251034846,
-        "age": 0.07970878682416244,
-        "existing_credits": 0.018786882683508747,
-        "num_dependents": 0.004980666297247936,
-        "default": 0.0
-      },
+      "psi": {},
       "bucket_performance": [],
-      "cohort_over_time": [
-        {
-          "period_start": "2000-01-01",
-          "group": "0<=X<200",
-          "count": 5,
-          "accuracy": 0.8
-        },
-        {
-          "period_start": "2000-01-01",
-          "group": "<0",
-          "count": 2,
-          "accuracy": 1.0
-        },
-        {
-          "period_start": "2000-01-08",
-          "group": "0<=X<200",
-          "count": 2,
-          "accuracy": 1.0
-        },
-        {
-          "period_start": "2000-01-08",
-          "group": "<0",
-          "count": 2,
-          "accuracy": 0.5
-        },
-        {
-          "period_start": "2000-01-08",
-          "group": "no checking",
-          "count": 3,
-          "accuracy": 0.6666666666666666
-        },
-        {
-          "period_start": "2000-01-15",
-          "group": "0<=X<200",
-          "count": 1,
-          "accuracy": 0.0
-        },
-        {
-          "period_start": "2000-01-15",
-          "group": "<0",
-          "count": 1,
-          "accuracy": 0.0
-        },
-        {
-          "period_start": "2000-01-15",
-          "group": "no checking",
-          "count": 5,
-          "accuracy": 1.0
-        },
-        {
-          "period_start": "2000-01-22",
-          "group": "0<=X<200",
-          "count": 2,
-          "accuracy": 1.0
-        },
-        {
-          "period_start": "2000-01-22",
-          "group": "<0",
-          "count": 1,
-          "accuracy": 1.0
-        },
-        {
-          "period_start": "2000-01-22",
-          "group": ">=200",
-          "count": 1,
-          "accuracy": 0.0
-        },
-        {
-          "period_start": "2000-01-22",
-          "group": "no checking",
-          "count": 3,
-          "accuracy": 0.6666666666666666
-        },
-        {
-          "period_start": "2000-01-29",
-          "group": "0<=X<200",
-          "count": 2,
-          "accuracy": 1.0
-        },
-        {
-          "period_start": "2000-01-29",
-          "group": "no checking",
-          "count": 5,
-          "accuracy": 1.0
-        },
-        {
-          "period_start": "2000-02-05",
-          "group": "0<=X<200",
-          "count": 1,
-          "accuracy": 0.0
-        },
-        {
-          "period_start": "2000-02-05",
-          "group": "<0",
-          "count": 6,
-          "accuracy": 0.3333333333333333
-        },
-        {
-          "period_start": "2000-02-12",
-          "group": "0<=X<200",
-          "count": 2,
-          "accuracy": 0.5
-        },
-        {
-          "period_start": "2000-02-12",
-          "group": "<0",
-          "count": 2,
-          "accuracy": 1.0
-        },
-        {
-          "period_start": "2000-02-12",
-          "group": ">=200",
-          "count": 1,
-          "accuracy": 1.0
-        },
-        {
-          "period_start": "2000-02-12",
-          "group": "no checking",
-          "count": 2,
-          "accuracy": 1.0
-        },
-        {
-          "period_start": "2000-02-19",
-          "group": "0<=X<200",
-          "count": 2,
-          "accuracy": 0.5
-        },
-        {
-          "period_start": "2000-02-19",
-          "group": "<0",
-          "count": 3,
-          "accuracy": 0.6666666666666666
-        },
-        {
-          "period_start": "2000-02-19",
-          "group": "no checking",
-          "count": 2,
-          "accuracy": 1.0
-        },
-        {
-          "period_start": "2000-02-26",
-          "group": "0<=X<200",
-          "count": 2,
-          "accuracy": 1.0
-        },
-        {
-          "period_start": "2000-02-26",
-          "group": "<0",
-          "count": 3,
-          "accuracy": 1.0
-        },
-        {
-          "period_start": "2000-02-26",
-          "group": ">=200",
-          "count": 1,
-          "accuracy": 0.0
-        },
-        {
-          "period_start": "2000-02-26",
-          "group": "no checking",
-          "count": 1,
-          "accuracy": 1.0
-        },
-        {
-          "period_start": "2000-03-04",
-          "group": "0<=X<200",
-          "count": 3,
-          "accuracy": 0.6666666666666666
-        },
-        {
-          "period_start": "2000-03-04",
-          "group": ">=200",
-          "count": 1,
-          "accuracy": 0.0
-        },
-        {
-          "period_start": "2000-03-04",
-          "group": "no checking",
-          "count": 3,
-          "accuracy": 0.6666666666666666
-        },
-        {
-          "period_start": "2000-03-11",
-          "group": "0<=X<200",
-          "count": 4,
-          "accuracy": 0.75
-        },
-        {
-          "period_start": "2000-03-11",
-          "group": "<0",
-          "count": 1,
-          "accuracy": 1.0
-        },
-        {
-          "period_start": "2000-03-11",
-          "group": ">=200",
-          "count": 1,
-          "accuracy": 1.0
-        },
-        {
-          "period_start": "2000-03-11",
-          "group": "no checking",
-          "count": 1,
-          "accuracy": 1.0
-        },
-        {
-          "period_start": "2000-03-18",
-          "group": "0<=X<200",
-          "count": 1,
-          "accuracy": 0.0
-        },
-        {
-          "period_start": "2000-03-18",
-          "group": "<0",
-          "count": 2,
-          "accuracy": 1.0
-        },
-        {
-          "period_start": "2000-03-18",
-          "group": "no checking",
-          "count": 4,
-          "accuracy": 0.75
-        },
-        {
-          "period_start": "2000-03-25",
-          "group": "0<=X<200",
-          "count": 2,
-          "accuracy": 1.0
-        },
-        {
-          "period_start": "2000-03-25",
-          "group": "<0",
-          "count": 1,
-          "accuracy": 0.0
-        },
-        {
-          "period_start": "2000-03-25",
-          "group": "no checking",
-          "count": 4,
-          "accuracy": 0.5
-        },
-        {
-          "period_start": "2000-04-01",
-          "group": "0<=X<200",
-          "count": 3,
-          "accuracy": 0.3333333333333333
-        },
-        {
-          "period_start": "2000-04-01",
-          "group": "<0",
-          "count": 2,
-          "accuracy": 1.0
-        },
-        {
-          "period_start": "2000-04-01",
-          "group": "no checking",
-          "count": 2,
-          "accuracy": 1.0
-        },
-        {
-          "period_start": "2000-04-08",
-          "group": "0<=X<200",
-          "count": 1,
-          "accuracy": 1.0
-        },
-        {
-          "period_start": "2000-04-08",
-          "group": ">=200",
-          "count": 1,
-          "accuracy": 1.0
-        },
-        {
-          "period_start": "2000-04-08",
-          "group": "no checking",
-          "count": 5,
-          "accuracy": 1.0
-        },
-        {
-          "period_start": "2000-04-15",
-          "group": "0<=X<200",
-          "count": 2,
-          "accuracy": 1.0
-        },
-        {
-          "period_start": "2000-04-15",
-          "group": "<0",
-          "count": 1,
-          "accuracy": 1.0
-        },
-        {
-          "period_start": "2000-04-15",
-          "group": ">=200",
-          "count": 1,
-          "accuracy": 1.0
-        },
-        {
-          "period_start": "2000-04-15",
-          "group": "no checking",
-          "count": 3,
-          "accuracy": 0.0
-        },
-        {
-          "period_start": "2000-04-22",
-          "group": "0<=X<200",
-          "count": 2,
-          "accuracy": 0.0
-        },
-        {
-          "period_start": "2000-04-22",
-          "group": "<0",
-          "count": 1,
-          "accuracy": 0.0
-        },
-        {
-          "period_start": "2000-04-22",
-          "group": "no checking",
-          "count": 4,
-          "accuracy": 0.75
-        },
-        {
-          "period_start": "2000-04-29",
-          "group": "0<=X<200",
-          "count": 1,
-          "accuracy": 1.0
-        },
-        {
-          "period_start": "2000-04-29",
-          "group": "<0",
-          "count": 2,
-          "accuracy": 0.0
-        },
-        {
-          "period_start": "2000-04-29",
-          "group": ">=200",
-          "count": 3,
-          "accuracy": 0.6666666666666666
-        },
-        {
-          "period_start": "2000-04-29",
-          "group": "no checking",
-          "count": 1,
-          "accuracy": 1.0
-        },
-        {
-          "period_start": "2000-05-06",
-          "group": "0<=X<200",
-          "count": 4,
-          "accuracy": 1.0
-        },
-        {
-          "period_start": "2000-05-06",
-          "group": "<0",
-          "count": 1,
-          "accuracy": 0.0
-        },
-        {
-          "period_start": "2000-05-06",
-          "group": "no checking",
-          "count": 2,
-          "accuracy": 0.5
-        },
-        {
-          "period_start": "2000-05-13",
-          "group": "<0",
-          "count": 5,
-          "accuracy": 0.6
-        },
-        {
-          "period_start": "2000-05-13",
-          "group": "no checking",
-          "count": 2,
-          "accuracy": 1.0
-        },
-        {
-          "period_start": "2000-05-20",
-          "group": "0<=X<200",
-          "count": 1,
-          "accuracy": 1.0
-        },
-        {
-          "period_start": "2000-05-20",
-          "group": "<0",
-          "count": 3,
-          "accuracy": 1.0
-        },
-        {
-          "period_start": "2000-05-20",
-          "group": "no checking",
-          "count": 3,
-          "accuracy": 1.0
-        },
-        {
-          "period_start": "2000-05-27",
-          "group": "0<=X<200",
-          "count": 3,
-          "accuracy": 0.6666666666666666
-        },
-        {
-          "period_start": "2000-05-27",
-          "group": "no checking",
-          "count": 4,
-          "accuracy": 1.0
-        },
-        {
-          "period_start": "2000-06-03",
-          "group": "0<=X<200",
-          "count": 1,
-          "accuracy": 1.0
-        },
-        {
-          "period_start": "2000-06-03",
-          "group": "<0",
-          "count": 4,
-          "accuracy": 0.25
-        },
-        {
-          "period_start": "2000-06-03",
-          "group": "no checking",
-          "count": 2,
-          "accuracy": 1.0
-        },
-        {
-          "period_start": "2000-06-10",
-          "group": "0<=X<200",
-          "count": 1,
-          "accuracy": 1.0
-        },
-        {
-          "period_start": "2000-06-10",
-          "group": "<0",
-          "count": 2,
-          "accuracy": 0.5
-        },
-        {
-          "period_start": "2000-06-10",
-          "group": "no checking",
-          "count": 4,
-          "accuracy": 1.0
-        },
-        {
-          "period_start": "2000-06-17",
-          "group": "0<=X<200",
-          "count": 3,
-          "accuracy": 0.6666666666666666
-        },
-        {
-          "period_start": "2000-06-17",
-          "group": "<0",
-          "count": 1,
-          "accuracy": 0.0
-        },
-        {
-          "period_start": "2000-06-17",
-          "group": "no checking",
-          "count": 3,
-          "accuracy": 1.0
-        },
-        {
-          "period_start": "2000-06-24",
-          "group": "0<=X<200",
-          "count": 1,
-          "accuracy": 1.0
-        },
-        {
-          "period_start": "2000-06-24",
-          "group": "<0",
-          "count": 2,
-          "accuracy": 0.0
-        },
-        {
-          "period_start": "2000-06-24",
-          "group": ">=200",
-          "count": 1,
-          "accuracy": 0.0
-        },
-        {
-          "period_start": "2000-06-24",
-          "group": "no checking",
-          "count": 3,
-          "accuracy": 1.0
-        },
-        {
-          "period_start": "2000-07-01",
-          "group": "0<=X<200",
-          "count": 1,
-          "accuracy": 1.0
-        },
-        {
-          "period_start": "2000-07-01",
-          "group": "<0",
-          "count": 4,
-          "accuracy": 0.75
-        },
-        {
-          "period_start": "2000-07-01",
-          "group": ">=200",
-          "count": 1,
-          "accuracy": 1.0
-        },
-        {
-          "period_start": "2000-07-01",
-          "group": "no checking",
-          "count": 1,
-          "accuracy": 1.0
-        },
-        {
-          "period_start": "2000-07-08",
-          "group": "0<=X<200",
-          "count": 1,
-          "accuracy": 1.0
-        },
-        {
-          "period_start": "2000-07-08",
-          "group": "<0",
-          "count": 2,
-          "accuracy": 1.0
-        },
-        {
-          "period_start": "2000-07-08",
-          "group": "no checking",
-          "count": 4,
-          "accuracy": 1.0
-        },
-        {
-          "period_start": "2000-07-15",
-          "group": "0<=X<200",
-          "count": 1,
-          "accuracy": 1.0
-        },
-        {
-          "period_start": "2000-07-15",
-          "group": "<0",
-          "count": 1,
-          "accuracy": 0.0
-        },
-        {
-          "period_start": "2000-07-15",
-          "group": "no checking",
-          "count": 2,
-          "accuracy": 1.0
-        }
-      ]
+      "cohort_over_time": []
     }
   }
 }

@@ -23,6 +23,11 @@ jupyter
 notebook
 ipykernel
 
-# Utilities
-tqdm
-joblib
+# Imbalanced learning
+imblearn
+
+# Dashboard
+streamlit
+
+# PDF generation
+reportlab

@@ -1,126 +1,210 @@
 {
-  "rows": 800,
-  "columns": 10,
-  "target": null,
+  "rows": 1000,
+  "columns": 21,
+  "target": "default",
+  "target_counts": {
+    "good": 700,
+    "bad": 300
+  },
   "dtypes": {
-    "Unnamed: 0": "int64",
-    "Age": "int64",
-    "Sex": "object",
-    "Job": "int64",
-    "Housing": "object",
-    "Saving accounts": "object",
-    "Checking account": "object",
-    "Credit amount": "int64",
-    "Duration": "int64",
-    "Purpose": "object"
+    "checking_status": "object",
+    "duration": "int64",
+    "credit_history": "object",
+    "purpose": "object",
+    "credit_amount": "int64",
+    "savings_status": "object",
+    "employment": "object",
+    "installment_commitment": "int64",
+    "personal_status": "object",
+    "other_parties": "object",
+    "residence_since": "int64",
+    "property_magnitude": "object",
+    "age": "int64",
+    "other_payment_plans": "object",
+    "housing": "object",
+    "existing_credits": "int64",
+    "job": "object",
+    "num_dependents": "int64",
+    "own_telephone": "object",
+    "foreign_worker": "object",
+    "default": "object"
   },
-  "missingness_percent_top": {
-    "Checking account": 40.375,
-    "Saving accounts": 18.625
-  },
+  "missingness_percent_top": {},
   "numeric_summary": {
-    "Unnamed: 0": {
-      "count": 800.0,
-      "mean": 497.41875,
-      "std": 289.5115447899199,
-      "min": 0.0,
-      "25%": 241.75,
-      "50%": 493.5,
-      "75%": 750.25,
-      "max": 999.0
+    "duration": {
+      "count": 1000.0,
+      "mean": 20.903,
+      "std": 12.058814452756375,
+      "min": 4.0,
+      "25%": 12.0,
+      "50%": 18.0,
+      "75%": 24.0,
+      "max": 72.0
     },
-    "Age": {
-      "count": 800.0,
-      "mean": 35.55875,
-      "std": 11.411587481527743,
+    "credit_amount": {
+      "count": 1000.0,
+      "mean": 3271.258,
+      "std": 2822.7368759604406,
+      "min": 250.0,
+      "25%": 1365.5,
+      "50%": 2319.5,
+      "75%": 3972.25,
+      "max": 18424.0
+    },
+    "installment_commitment": {
+      "count": 1000.0,
+      "mean": 2.973,
+      "std": 1.1187146743126786,
+      "min": 1.0,
+      "25%": 2.0,
+      "50%": 3.0,
+      "75%": 4.0,
+      "max": 4.0
+    },
+    "residence_since": {
+      "count": 1000.0,
+      "mean": 2.845,
+      "std": 1.1037178956568536,
+      "min": 1.0,
+      "25%": 2.0,
+      "50%": 3.0,
+      "75%": 4.0,
+      "max": 4.0
+    },
+    "age": {
+      "count": 1000.0,
+      "mean": 35.546,
+      "std": 11.375468574317512,
       "min": 19.0,
       "25%": 27.0,
       "50%": 33.0,
       "75%": 42.0,
       "max": 75.0
     },
-    "Job": {
-      "count": 800.0,
-      "mean": 1.93,
-      "std": 0.6543203870896898,
-      "min": 0.0,
-      "25%": 2.0,
-      "50%": 2.0,
+    "existing_credits": {
+      "count": 1000.0,
+      "mean": 1.407,
+      "std": 0.5776544682461002,
+      "min": 1.0,
+      "25%": 1.0,
+      "50%": 1.0,
       "75%": 2.0,
-      "max": 3.0
+      "max": 4.0
     },
-    "Credit amount": {
-      "count": 800.0,
-      "mean": 3360.61875,
-      "std": 2898.174862791682,
-      "min": 250.0,
-      "25%": 1380.0,
-      "50%": 2333.0,
-      "75%": 4154.5,
-      "max": 18424.0
-    },
-    "Duration": {
-      "count": 800.0,
-      "mean": 21.095,
-      "std": 11.807211262497447,
-      "min": 4.0,
-      "25%": 12.0,
-      "50%": 18.0,
-      "75%": 24.0,
-      "max": 60.0
+    "num_dependents": {
+      "count": 1000.0,
+      "mean": 1.155,
+      "std": 0.36208577175319395,
+      "min": 1.0,
+      "25%": 1.0,
+      "50%": 1.0,
+      "75%": 1.0,
+      "max": 2.0
     }
   },
   "top_abs_correlations": [
     {
-      "col1": "Credit amount",
-      "col2": "Duration",
-      "abs_corr": 0.6264104917274059
+      "col1": "duration",
+      "col2": "credit_amount",
+      "abs_corr": 0.6249841983009851
     },
     {
-      "col1": "Job",
-      "col2": "Credit amount",
-      "abs_corr": 0.2811540650719218
+      "col1": "credit_amount",
+      "col2": "installment_commitment",
+      "abs_corr": 0.271315701246002
     },
     {
-      "col1": "Job",
-      "col2": "Duration",
-      "abs_corr": 0.21907605188554954
+      "col1": "residence_since",
+      "col2": "age",
+      "abs_corr": 0.266419183969461
     },
     {
-      "col1": "Age",
-      "col2": "Duration",
-      "abs_corr": 0.04679202759539947
+      "col1": "age",
+      "col2": "existing_credits",
+      "abs_corr": 0.14925358219009058
     },
     {
-      "col1": "Age",
-      "col2": "Credit amount",
-      "abs_corr": 0.031826062749220965
+      "col1": "age",
+      "col2": "num_dependents",
+      "abs_corr": 0.11820083281906714
     },
     {
-      "col1": "Age",
-      "col2": "Job",
-      "abs_corr": 0.025861546018418537
+      "col1": "existing_credits",
+      "col2": "num_dependents",
+      "abs_corr": 0.10966670041593389
     },
     {
-      "col1": "Unnamed: 0",
-      "col2": "Age",
-      "abs_corr": 0.02550158609968011
+      "col1": "residence_since",
+      "col2": "existing_credits",
+      "abs_corr": 0.08962523262254277
     },
     {
-      "col1": "Unnamed: 0",
-      "col2": "Job",
-      "abs_corr": 0.021337272054655666
+      "col1": "duration",
+      "col2": "installment_commitment",
+      "abs_corr": 0.07474881629117033
     },
     {
-      "col1": "Unnamed: 0",
-      "col2": "Duration",
-      "abs_corr": 0.019143011472778755
+      "col1": "installment_commitment",
+      "col2": "num_dependents",
+      "abs_corr": 0.0712069430082334
     },
     {
-      "col1": "Unnamed: 0",
-      "col2": "Credit amount",
-      "abs_corr": 0.007256243084044437
+      "col1": "installment_commitment",
+      "col2": "age",
+      "abs_corr": 0.0582656843514099
+    },
+    {
+      "col1": "installment_commitment",
+      "col2": "residence_since",
+      "abs_corr": 0.04930237081388658
+    },
+    {
+      "col1": "residence_since",
+      "col2": "num_dependents",
+      "abs_corr": 0.04264342597522536
+    },
+    {
+      "col1": "duration",
+      "col2": "age",
+      "abs_corr": 0.03613637401909835
+    },
+    {
+      "col1": "duration",
+      "col2": "residence_since",
+      "abs_corr": 0.03406720161114831
+    },
+    {
+      "col1": "credit_amount",
+      "col2": "age",
+      "abs_corr": 0.032716416665448014
+    },
+    {
+      "col1": "credit_amount",
+      "col2": "residence_since",
+      "abs_corr": 0.028926323080232533
+    },
+    {
+      "col1": "duration",
+      "col2": "num_dependents",
+      "abs_corr": 0.023834475397621752
+    },
+    {
+      "col1": "installment_commitment",
+      "col2": "existing_credits",
+      "abs_corr": 0.0216687425713283
+    },
+    {
+      "col1": "credit_amount",
+      "col2": "existing_credits",
+      "abs_corr": 0.020794551748965877
+    },
+    {
+      "col1": "credit_amount",
+      "col2": "num_dependents",
+      "abs_corr": 0.017142154158463888
     }
   ],
-  "suggested_sensitive_columns": []
+  "suggested_sensitive_columns": [
+    "age"
+  ]
 }

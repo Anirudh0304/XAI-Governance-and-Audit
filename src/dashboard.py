@@ -1,74 +1,282 @@
-"""Minimal Streamlit dashboard to display trajectory analysis results."""
+"""Streamlit dashboard for ML Governance Toolkit."""
 from __future__ import annotations
 from pathlib import Path
 import json
-from typing import Any
+from datetime import datetime
+from typing import Any, Dict, List
+import os
+import sys
+import sys
+from pathlib import Path
+
+# Add project root (explainable_ai) to Python path
+ROOT = Path(__file__).resolve().parents[1]
+if str(ROOT) not in sys.path:
+    sys.path.insert(0, str(ROOT))
 
 import pandas as pd
+import streamlit as st
+import plotly.graph_objects as go
 
-try:
-    import streamlit as st
-except Exception:
-    raise
+from src.model_training import train_and_evaluate_df, detect_target
+from src.explainability_layer import explain_model
+from src.utils.evidence_pack import build_audit_bundle, save_audit_json, save_audit_pdf
+from src.bias_fairness import evaluate_fairness
 
-
-ROOT = Path(__file__).resolve().parents[0]
-REPORTS = Path('reports')
-
-
-def load_trajectory() -> dict[str, Any]:
-    p = REPORTS / 'trajectory_summary.json'
-    if not p.exists():
-        return {}
-    return json.loads(p.read_text(encoding='utf-8'))
+ROOT = Path(__file__).resolve().parents[1]
+REPORTS = ROOT / 'reports'
+HISTORY_FILE = REPORTS / 'model_history.json'
 
 
-def render_psi(psi: dict[str, float]):
-    if not psi:
-        st.info('No PSI data available')
-        return
-    s = pd.Series(psi).sort_values(ascending=False)
-    st.bar_chart(s)
+def load_history() -> List[Dict[str, Any]]:
+    if not HISTORY_FILE.exists():
+        return []
+    with open(HISTORY_FILE, 'r', encoding='utf-8') as f:
+        return json.load(f)
 
 
-def render_bucket_perf(bucket_perf: list[dict]):
-    if not bucket_perf:
-        st.info('No bucket performance data')
-        return
-    df = pd.DataFrame(bucket_perf)
-    # ensure columns
-    if 'age_bucket' not in df.columns and 'index' in df.columns:
-        df = df.rename(columns={'index': 'age_bucket'})
-    st.dataframe(df)
+def save_history(history: List[Dict[str, Any]]):
+    HISTORY_FILE.parent.mkdir(parents=True, exist_ok=True)
+    with open(HISTORY_FILE, 'w', encoding='utf-8') as f:
+        json.dump(history, f, indent=2)
 
 
-def render_cohort(cohort_records: list[dict]):
-    if not cohort_records:
-        st.info('No cohort data available')
-        return
-    df = pd.DataFrame(cohort_records)
-    if df.empty:
-        st.info('No cohort records')
-        return
-    # pivot to have groups as columns
-    df['period_start'] = pd.to_datetime(df['period_start'])
-    pivot = df.pivot_table(index='period_start', columns='group', values='accuracy')
-    st.line_chart(pivot.fillna(method='ffill'))
+def simulate_bias_mitigation(df: pd.DataFrame, target: str, sensitive: str) -> Dict[str, Any]:
+    """
+    Simulate reweighting to mitigate bias.
+    """
+    from sklearn.ensemble import RandomForestClassifier
+    from sklearn.model_selection import train_test_split
+    from sklearn.metrics import roc_auc_score, accuracy_score
+    from src.model_training import preprocess_for_model
+    from src.bias_fairness import evaluate_fairness
+    
+    X, y = preprocess_for_model(df, target)
+    X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
+    
+    # Simple reweighting: weight by inverse frequency of sensitive group
+    sensitive_train = df.loc[X_train.index, sensitive]
+    group_counts = sensitive_train.value_counts()
+    total = len(sensitive_train)
+    sample_weight = sensitive_train.map(lambda x: total / group_counts[x])
+    
+    # Train with weights
+    model = RandomForestClassifier(n_estimators=100, random_state=42)
+    model.fit(X_train, y_train, sample_weight=sample_weight)
+    
+    y_pred = model.predict(X_test)
+    y_prob = model.predict_proba(X_test)[:, 1]
+    
+    metrics = {
+        "accuracy": float(accuracy_score(y_test, y_pred)),
+        "roc_auc": float(roc_auc_score(y_test, y_prob))
+    }
+    
+    test_df = X_test.copy()
+    test_df['y_true'] = y_test
+    test_df['y_pred'] = y_pred
+    test_df['sensitive'] = df.loc[X_test.index, sensitive]
+    fairness = evaluate_fairness(test_df['y_true'], test_df['y_pred'], test_df['sensitive'])
+    metrics.update(fairness)
+    
+    return metrics
 
 
-def main():
-    st.title('Explainable AI — Trajectory Dashboard')
-    tr = load_trajectory()
-    st.header('Population Stability (PSI)')
-    render_psi(tr.get('psi', {}))
+# Main dashboard code
+st.title('ML Governance Toolkit Dashboard')
 
-    st.header('Bucket Performance')
-    render_bucket_perf(tr.get('bucket_performance', []))
+# File upload
+uploaded_file = st.file_uploader("Upload CSV Dataset", type=['csv'])
+if uploaded_file is None:
+    st.info("Please upload a CSV file to begin.")
+else:
+    df = pd.read_csv(uploaded_file)
+    st.write("Dataset Preview:")
+    st.dataframe(df.head())
+    
+    # Column selection
+    columns = list(df.columns)
+    target_col = st.selectbox("Select Target Column", columns, index=columns.index(detect_target(df)) if detect_target(df) else 0)
+    sensitive_col = st.selectbox("Select Sensitive Attribute (for Fairness)", columns)
+    
+    if st.button("Run Analysis"):
+        with st.spinner("Running analysis..."):
+            # Train and evaluate
+            result = train_and_evaluate_df(df, target_col, sensitive_col)
+            model = result['best_model']
+            model_metrics = result['model_metrics']
+            fairness = result['fairness']
+            X_test = result['X_test']
+            y_test = result['y_test']
+            y_pred = result['y_pred']
+            y_prob = result['y_prob']
+            
+            # Explainability
+            shap_features = explain_model(model, X_test)
+            
+            # Display results
+            st.header("Model Performance")
+            
+            # Show metrics for both models
+            st.subheader("Model Comparison")
+            comparison_df = pd.DataFrame({
+                'Model': list(model_metrics.keys()),
+                'Accuracy': [m['accuracy'] for m in model_metrics.values()],
+                'ROC AUC': [m.get('roc_auc', 'N/A') for m in model_metrics.values()]
+            })
+            st.dataframe(comparison_df)
+            
+            # Best model metrics
+            best_name = 'XGBoost' if hasattr(model, 'get_booster') else 'RandomForest'
+            best_metrics = model_metrics[best_name]
+            
+            col1, col2 = st.columns(2)
+            with col1:
+                st.metric("Best Model Accuracy", f"{best_metrics['accuracy']:.3f}")
+            with col2:
+                if 'roc_auc' in best_metrics:
+                    st.metric("Best Model ROC AUC", f"{best_metrics['roc_auc']:.3f}")
+            
+            # Show threshold tuning info
+            if 'optimal_threshold' in best_metrics:
+                st.subheader("Threshold Tuning")
+                col1, col2 = st.columns(2)
+                with col1:
+                    st.metric("Optimal Threshold", f"{best_metrics['optimal_threshold']:.3f}")
+                with col2:
+                    st.metric("Tuned Accuracy", f"{best_metrics['tuned_accuracy']:.3f}")
+            
+            st.header("Fairness Metrics")
+            col1, col2 = st.columns(2)
+            with col1:
+                st.metric("Demographic Parity Diff", f"{fairness['demographic_parity_difference']:.3f}")
+            with col2:
+                st.metric("Equalized Odds Diff", f"{fairness['equalized_odds_difference']:.3f}")
+            
+            st.header("Top SHAP Features")
+            shap_df = pd.DataFrame(list(shap_features.items()), columns=['Feature', 'Importance'])
+            st.bar_chart(shap_df.set_index('Feature'))
+            
+            # Save individual reports
+            # Model metrics
+            model_metrics_to_save = {k: v for k, v in best_metrics.items() if k in ['accuracy', 'tuned_accuracy', 'classification_report', 'roc_auc', 'optimal_threshold']}
+            with open(REPORTS / 'model_metrics.json', 'w') as f:
+                json.dump(model_metrics_to_save, f, indent=2)
+            
+            # Explainability
+            explainability_data = {'mean_abs_shap': shap_features}
+            with open(REPORTS / 'explainability_summary.json', 'w') as f:
+                json.dump(explainability_data, f, indent=2)
+            
+            # Fairness
+            with open(REPORTS / 'fairness_summary.json', 'w') as f:
+                json.dump(fairness, f, indent=2)
+            
+            # Dataset profile
+            from src.utils.profile import profile
+            profile_data = profile(df)
+            with open(REPORTS / 'dataset_profile.json', 'w') as f:
+                json.dump(profile_data, f, indent=2)
+            
+            # Model predictions
+            preds_df = X_test.copy()
+            preds_df['y_true'] = y_test
+            preds_df['y_pred'] = y_pred
+            preds_df['sensitive'] = df.loc[X_test.index, sensitive_col]
+            preds_df.to_csv(REPORTS / 'model_predictions.csv', index=False)
+            
+            # Trajectory summary
+            from src.trajectory.analysis import performance_by_bucket
+            trajectory_data = {'psi': {}, 'bucket_performance': [], 'cohort_over_time': []}
+            if sensitive_col in preds_df.columns:
+                try:
+                    perf_bucket = performance_by_bucket(preds_df, sensitive_col)
+                    trajectory_data['bucket_performance'] = perf_bucket.to_dict(orient='records')
+                except Exception:
+                    pass  # If fails, keep empty
+            with open(REPORTS / 'trajectory_summary.json', 'w') as f:
+                json.dump(trajectory_data, f, indent=2)
 
-    st.header('Cohort Performance Over Time')
-    render_cohort(tr.get('cohort_over_time', []))
+            # Log to history
+            history = load_history()
+            run_entry = {
+                'timestamp': datetime.utcnow().isoformat() + 'Z',
+                'roc_auc': best_metrics.get('roc_auc', None),
+                'accuracy': best_metrics.get('accuracy', None),
+                'tuned_accuracy': best_metrics.get('tuned_accuracy', None),
+                'optimal_threshold': best_metrics.get('optimal_threshold', None),
+                'fairness_dp': fairness['demographic_parity_difference'],
+                'fairness_eo': fairness['equalized_odds_difference'],
+                'top_shap': list(shap_features.keys())[:5],
+                'best_model': best_name
+            }
+            history.append(run_entry)
 
+            # 1. Save history FIRST
+            save_history(history)
 
-if __name__ == '__main__':
-    main()
+            # 2. Ensure all required artifacts exist BEFORE audit
+            required_files = [
+                'model_metrics.json',
+                'fairness_summary.json',
+                'explainability_summary.json',
+                'trajectory_summary.json',
+                'model_history.json'
+            ]
+
+            missing = [f for f in required_files if not (REPORTS / f).exists()]
+
+            if missing:
+                st.warning(f"Audit may be incomplete. Missing files: {missing}")
+            else:
+                st.info("All audit artifacts present. Generating audit report...")
+
+            # 3. Generate audit AFTER validation
+            audit_bundle = build_audit_bundle(REPORTS)
+            audit_json = REPORTS / 'audit_report.json'
+            audit_pdf = REPORTS / 'audit_report.pdf'
+
+            save_audit_json(audit_bundle, audit_json)
+            save_audit_pdf(audit_bundle, audit_pdf)
+
+            st.success(f"Audit reports saved to {audit_json} and {audit_pdf}")
+            
+            # Feedback loop
+            if fairness['demographic_parity_difference'] > 0.2:
+                st.warning("High bias detected! Simulating bias mitigation...")
+                mitigated_metrics = simulate_bias_mitigation(df, target_col, sensitive_col)
+                st.subheader("After Mitigation (Reweighting)")
+                col1, col2, col3 = st.columns(3)
+                with col1:
+                    st.metric("ROC AUC", f"{mitigated_metrics['roc_auc']:.3f}", delta=f"{mitigated_metrics['roc_auc'] - best_metrics.get('roc_auc', 0):.3f}")
+                with col2:
+                    st.metric("DP Diff", f"{mitigated_metrics['demographic_parity_difference']:.3f}", delta=f"{mitigated_metrics['demographic_parity_difference'] - fairness['demographic_parity_difference']:.3f}")
+                with col3:
+                    st.metric("EO Diff", f"{mitigated_metrics['equalized_odds_difference']:.3f}", delta=f"{mitigated_metrics['equalized_odds_difference'] - fairness['equalized_odds_difference']:.3f}")
+
+# Trajectory section
+st.header("Trajectory Analysis")
+history = load_history()
+if history:
+    hist_df = pd.DataFrame(history)
+    hist_df['timestamp'] = pd.to_datetime(hist_df['timestamp'])
+    
+    # ROC AUC over time
+    if 'roc_auc' in hist_df.columns:
+        fig = go.Figure()
+        fig.add_trace(go.Scatter(x=hist_df['timestamp'], y=hist_df['roc_auc'], mode='lines+markers', name='ROC AUC'))
+        fig.update_layout(title='ROC AUC Over Time', xaxis_title='Time', yaxis_title='ROC AUC')
+        st.plotly_chart(fig)
+    
+    # Fairness over time
+    fig2 = go.Figure()
+    fig2.add_trace(go.Scatter(x=hist_df['timestamp'], y=hist_df['fairness_dp'], mode='lines+markers', name='Demographic Parity Diff'))
+    fig2.add_trace(go.Scatter(x=hist_df['timestamp'], y=hist_df['fairness_eo'], mode='lines+markers', name='Equalized Odds Diff'))
+    fig2.update_layout(title='Fairness Metrics Over Time', xaxis_title='Time', yaxis_title='Difference')
+    st.plotly_chart(fig2)
+    
+    st.subheader("Recent Runs")
+    st.dataframe(hist_df.tail(5))
+else:
+    st.info("No history available. Run analysis to start tracking.")
 
