@@ -213,6 +213,40 @@ def find_fair_threshold(y_true, y_prob, sensitive, fairness_limit=0.2):
     return best_threshold
 
 
+def analyze_threshold_tradeoff(y_true, y_prob, sensitive):
+    """
+    Analyze performance and fairness metrics across multiple thresholds.
+    Useful for understanding accuracy-fairness tradeoffs.
+    
+    Args:
+        y_true: True labels
+        y_prob: Predicted probabilities
+        sensitive: Sensitive attribute values
+    
+    Returns:
+        List of dicts with threshold, accuracy, and fairness metrics
+    """
+    from src.bias_fairness import evaluate_fairness
+    
+    thresholds = np.linspace(0.1, 0.9, 17)
+    results = []
+    
+    for t in thresholds:
+        y_pred = (y_prob >= t).astype(int)
+        
+        acc = accuracy_score(y_true, y_pred)
+        fairness = evaluate_fairness(y_true, y_pred, sensitive)
+        
+        results.append({
+            "threshold": float(t),
+            "accuracy": float(acc),
+            "demographic_parity": float(fairness.get("demographic_parity_difference", 0)),
+            "equalized_odds": float(fairness.get("equalized_odds_difference", 0))
+        })
+    
+    return results
+
+
 def train_models(X_train, y_train, random_state=42, use_smote=True):
     """Train Random Forest and XGBoost models with SMOTE for better imbalance handling."""
 
@@ -332,11 +366,21 @@ def train_and_evaluate_df(df: pd.DataFrame, target: str, sensitive: str, test_si
     test_df['sensitive'] = sensitive_test
     fairness = evaluate_fairness(test_df['y_true'], test_df['y_pred'], test_df['sensitive'])
     
+    # Threshold tradeoff analysis
+    threshold_analysis = []
+    if y_prob is not None and len(y_test.unique()) == 2:
+        threshold_analysis = analyze_threshold_tradeoff(
+            y_test,
+            y_prob,
+            sensitive_test
+        )
+    
     result = {
         'best_model': best_model,
         'model_metrics': model_metrics,
         'fairness': fairness,
         'fair_threshold': float(fair_threshold),
+        'threshold_analysis': threshold_analysis,
         'X_test': X_test,
         'y_test': y_test,
         'y_pred': y_pred,
