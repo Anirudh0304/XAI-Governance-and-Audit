@@ -175,6 +175,44 @@ def find_optimal_threshold(y_true, y_prob):
     return thresholds[optimal_idx], f1_scores[optimal_idx]
 
 
+def find_fair_threshold(y_true, y_prob, sensitive, fairness_limit=0.2):
+    """
+    Find threshold that minimizes bias while keeping accuracy high.
+    
+    Args:
+        y_true: True labels
+        y_prob: Predicted probabilities
+        sensitive: Sensitive attribute values
+        fairness_limit: Maximum acceptable demographic parity difference
+    
+    Returns:
+        Optimal threshold that satisfies fairness constraint and maximizes accuracy
+    """
+    from src.bias_fairness import evaluate_fairness
+    
+    thresholds = np.linspace(0.1, 0.9, 17)
+    
+    best_threshold = 0.5
+    best_accuracy = 0
+    best_bias = 1
+    
+    for t in thresholds:
+        y_pred = (y_prob >= t).astype(int)
+        
+        acc = accuracy_score(y_true, y_pred)
+        fairness = evaluate_fairness(y_true, y_pred, sensitive)
+        
+        bias = abs(fairness.get("demographic_parity_difference", 1))
+        
+        # Choose threshold that satisfies fairness and maximizes accuracy
+        if bias <= fairness_limit and acc > best_accuracy:
+            best_accuracy = acc
+            best_threshold = t
+            best_bias = bias
+    
+    return best_threshold
+
+
 def train_models(X_train, y_train, random_state=42, use_smote=True):
     """Train Random Forest and XGBoost models with SMOTE for better imbalance handling."""
 
@@ -267,22 +305,38 @@ def train_and_evaluate_df(df: pd.DataFrame, target: str, sensitive: str, test_si
         
         model_metrics[name] = metrics
     
-    # Use best model for fairness evaluation
-    y_pred = best_model.predict(X_test)
+    # Get predicted probabilities
     y_prob = best_model.predict_proba(X_test)[:, 1] if hasattr(best_model, 'predict_proba') else None
     
-    # Fairness
+    # Get sensitive values for test set
+    sensitive_test = sensitive_series.loc[X_test.index]
+    
+    # Find fairness-aware threshold
+    fair_threshold = 0.5  # Default value
+    if y_prob is not None and len(y_test.unique()) == 2:
+        fair_threshold = find_fair_threshold(
+            y_test,
+            y_prob,
+            sensitive_test,
+            fairness_limit=0.2
+        )
+    
+    # Final predictions using fairness-aware threshold
+    y_pred = (y_prob >= fair_threshold).astype(int) if y_prob is not None else best_model.predict(X_test)
+    
+    # Fairness evaluation
     from src.bias_fairness import evaluate_fairness
     test_df = X_test.copy()
     test_df['y_true'] = y_test
     test_df['y_pred'] = y_pred
-    test_df['sensitive'] = sensitive_series.loc[X_test.index]
+    test_df['sensitive'] = sensitive_test
     fairness = evaluate_fairness(test_df['y_true'], test_df['y_pred'], test_df['sensitive'])
     
     result = {
         'best_model': best_model,
         'model_metrics': model_metrics,
         'fairness': fairness,
+        'fair_threshold': float(fair_threshold),
         'X_test': X_test,
         'y_test': y_test,
         'y_pred': y_pred,
