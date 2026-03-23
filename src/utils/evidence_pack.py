@@ -184,18 +184,55 @@ def save_audit_pdf(bundle: dict, out_pdf: Path):
     fa = bundle['artifacts'].get('fairness') or {}
     y = section_header(y, 'Fairness Assessment')
     if fa:
-        dp_val = fa.get('demographic_parity_difference', None)
-        eo_val = fa.get('equalized_odds_difference', None)
+        dp_val    = fa.get('demographic_parity_difference', None)
+        eo_val    = fa.get('equalized_odds_difference', None)
+        dp_lower  = fa.get('dp_ci_lower', None)
+        dp_upper  = fa.get('dp_ci_upper', None)
+        eo_lower  = fa.get('eo_ci_lower', None)
+        eo_upper  = fa.get('eo_ci_upper', None)
+        ci_level  = fa.get('ci_level', 95)
+        n_boot    = fa.get('n_bootstrap', 1000)
 
         if dp_val is not None:
             dp_f = float(dp_val)
             flag = '⚠ HIGH — exceeds 0.20 limit' if dp_f > 0.2 else '✓ Within limit'
             y = row(y, 'Demographic Parity Diff', f"{dp_f:.4f}", flag)
+            # Show CI if available
+            if dp_lower is not None and dp_upper is not None:
+                y = check_y(y)
+                c.setFont('Helvetica', 9)
+                c.setFillColorRGB(0.3, 0.3, 0.3)
+                ci_flag = ' ⚠ Upper bound > 0.20' if float(dp_upper) > 0.2 else ' ✓ CI within limit'
+                c.drawString(margin + 20, y,
+                    f"{ci_level}% CI: [{float(dp_lower):.4f} — {float(dp_upper):.4f}]{ci_flag}")
+                c.setFillColorRGB(0, 0, 0)
+                y -= 12
 
         if eo_val is not None:
             eo_f = float(eo_val)
             flag = '⚠ HIGH — exceeds 0.20 limit' if eo_f > 0.2 else '✓ Within limit'
-            y = row(y, 'Equalized Odds Diff',     f"{eo_f:.4f}", flag)
+            y = row(y, 'Equalized Odds Diff', f"{eo_f:.4f}", flag)
+            # Show CI if available
+            if eo_lower is not None and eo_upper is not None:
+                y = check_y(y)
+                c.setFont('Helvetica', 9)
+                c.setFillColorRGB(0.3, 0.3, 0.3)
+                ci_flag = ' ⚠ Upper bound > 0.20' if float(eo_upper) > 0.2 else ' ✓ CI within limit'
+                c.drawString(margin + 20, y,
+                    f"{ci_level}% CI: [{float(eo_lower):.4f} — {float(eo_upper):.4f}]{ci_flag}")
+                c.setFillColorRGB(0, 0, 0)
+                y -= 12
+
+        # Bootstrap info note
+        if dp_lower is not None:
+            y -= 4
+            y = check_y(y, 20)
+            c.setFont('Helvetica-Oblique', 9)
+            c.setFillColorRGB(0.3, 0.3, 0.3)
+            c.drawString(margin + 10, y,
+                f"Bootstrap CIs computed from {n_boot} resamples at {ci_level}% confidence level.")
+            c.setFillColorRGB(0, 0, 0)
+            y -= 12
 
         # Interpretation note
         y -= 4
@@ -277,7 +314,7 @@ def save_audit_pdf(bundle: dict, out_pdf: Path):
             y -= 6
             y = check_y(y, 40)
             c.setFont('Helvetica-Bold', 10)
-            c.drawString(margin + 10, y, 'Performance by sensitive group:')
+            c.drawString(margin + 10, y, 'Performance by sensitive group (age bins):')
             y -= 14
 
             # Filter out groups with n < 5 (statistically unreliable)

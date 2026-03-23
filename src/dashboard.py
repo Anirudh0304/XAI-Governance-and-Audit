@@ -19,6 +19,13 @@ from src.model_training import train_and_evaluate_df, detect_target
 from src.explainability_layer import explain_model
 from src.utils.evidence_pack import build_audit_bundle, save_audit_json, save_audit_pdf
 from src.bias_fairness import evaluate_fairness
+# Governance assistant — graceful fallback if groq not installed
+try:
+    from src.governance_assistant import ask_governance_assistant, load_audit_bundle
+    GOVERNANCE_ASSISTANT_AVAILABLE = True
+except ImportError as e:
+    GOVERNANCE_ASSISTANT_AVAILABLE = False
+    _IMPORT_ERROR = str(e)
 
 ROOT = Path(__file__).resolve().parents[1]
 REPORTS = ROOT / "reports"
@@ -99,13 +106,6 @@ def simulate_bias_mitigation(df: pd.DataFrame, target: str, sensitive: str) -> D
 # ---------------------------------------------------------------------------
 # Dashboard
 # ---------------------------------------------------------------------------
-
-st.set_page_config(
-    page_title="ML Governance Toolkit",
-    page_icon="🛡️",
-    layout="wide",               
-    initial_sidebar_state="auto"
-)
 
 st.title("ML Governance Toolkit Dashboard")
 
@@ -317,6 +317,13 @@ else:
                     delta="⚠️ High" if abs(dp) > 0.2 else "✅ OK",
                     delta_color="inverse"
                 )
+                # Show CI if available
+                if "dp_ci_lower" in fairness:
+                    ci = fairness.get("ci_level", 95)
+                    st.caption(
+                        f"{ci}% CI: [{fairness['dp_ci_lower']:.3f} — {fairness['dp_ci_upper']:.3f}]"
+                        + (" ⚠️ Upper bound > 0.20" if fairness['dp_ci_upper'] > 0.2 else " ✅ CI within limit")
+                    )
             with col2:
                 eo = fairness["equalized_odds_difference"]
                 st.metric(
@@ -324,6 +331,16 @@ else:
                     delta="⚠️ High" if abs(eo) > 0.2 else "✅ OK",
                     delta_color="inverse"
                 )
+                # Show CI if available
+                if "eo_ci_lower" in fairness:
+                    ci = fairness.get("ci_level", 95)
+                    st.caption(
+                        f"{ci}% CI: [{fairness['eo_ci_lower']:.3f} — {fairness['eo_ci_upper']:.3f}]"
+                        + (" ⚠️ Upper bound > 0.20" if fairness['eo_ci_upper'] > 0.2 else " ✅ CI within limit")
+                    )
+            # Bootstrap info
+            if "n_bootstrap" in fairness:
+                st.caption(f"Bootstrap CIs from {fairness['n_bootstrap']} resamples at {fairness.get('ci_level', 95)}% confidence level.")
 
             # ----------------------------------------------------------------
             # SHAP Explainability
@@ -513,3 +530,82 @@ else:
         if c in hist_df.columns
     ]
     st.dataframe(hist_df[display_cols].tail(10), use_container_width=True)
+
+
+# ---------------------------------------------------------------------------
+# Governance Assistant (LLM-powered Q&A)
+# ---------------------------------------------------------------------------
+st.header("Governance Assistant")
+st.caption("Ask questions about your model performance, fairness, and audit results in plain English")
+
+# Check if groq is available
+if not GOVERNANCE_ASSISTANT_AVAILABLE:
+    st.warning(f"Governance Assistant unavailable. Run: pip install groq — Details: {_IMPORT_ERROR}")
+else:
+    # Check if audit report exists
+    audit_json_path = REPORTS / "audit_report.json"
+
+    if not audit_json_path.exists():
+        st.info("Run an analysis first to enable the Governance Assistant.")
+    else:
+        # Suggested questions as quick buttons
+        st.markdown("**Suggested questions:**")
+        col1, col2, col3 = st.columns(3)
+        with col1:
+            if st.button("Is the model fair?"):
+                st.session_state["gov_question"] = "Is the model fair based on the fairness metrics? Should it be deployed?"
+        with col2:
+            if st.button("Top risk factors?"):
+                st.session_state["gov_question"] = "What are the top risk factors driving credit default predictions?"
+        with col3:
+            if st.button("Summarise for stakeholders"):
+                st.session_state["gov_question"] = "Summarise this audit report in plain English for a non-technical stakeholder."
+
+        col4, col5, col6 = st.columns(3)
+        with col4:
+            if st.button("Any bias concerns?"):
+                st.session_state["gov_question"] = "Are there any demographic bias concerns I should be aware of?"
+        with col5:
+            if st.button("Model weaknesses?"):
+                st.session_state["gov_question"] = "What are the main weaknesses of this model based on the metrics?"
+        with col6:
+            if st.button("Regulatory compliance?"):
+                st.session_state["gov_question"] = "Does this model meet regulatory requirements based on the fairness thresholds?"
+
+        # Text input — pre-filled if a button was clicked
+        default_q = st.session_state.get("gov_question", "")
+        question = st.text_input(
+            "Or type your own question:",
+            value=default_q,
+            placeholder="e.g. Which age group is most at risk of incorrect predictions?"
+        )
+
+        if question and st.button("Ask Governance Assistant", type="primary"):
+            with st.spinner("Analysing audit data..."):
+                try:
+                    bundle = load_audit_bundle(str(REPORTS))
+                    answer = ask_governance_assistant(question, bundle)
+
+                    # Display answer in a styled box
+                    st.markdown("---")
+                    st.markdown("**Governance Assistant Response:**")
+                    st.info(answer)
+
+                    # Save Q&A to session for history
+                    if "qa_history" not in st.session_state:
+                        st.session_state["qa_history"] = []
+                    st.session_state["qa_history"].append({
+                        "question": question,
+                        "answer": answer
+                    })
+
+                except Exception as e:
+                    st.error(f"Assistant error: {e}. Check your Groq API key in src/governance_assistant.py")
+
+        # Show Q&A history for this session
+        if st.session_state.get("qa_history"):
+            with st.expander(f"Q&A History ({len(st.session_state['qa_history'])} questions this session)"):
+                for i, qa in enumerate(reversed(st.session_state["qa_history"]), 1):
+                    st.markdown(f"**Q{i}:** {qa['question']}")
+                    st.markdown(f"**A:** {qa['answer']}")
+                    st.markdown("---")

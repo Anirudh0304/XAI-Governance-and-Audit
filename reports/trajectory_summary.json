@@ -2,24 +2,24 @@
   "psi": {},
   "bucket_performance": [
     {
-      "sensitive": "female div/dep/mar",
-      "count": 61.0,
-      "accuracy": 0.7377049180327869
+      "sensitive": "middle_aged",
+      "count": 447.0,
+      "accuracy": 0.7941834451901566
     },
     {
-      "sensitive": "male div/sep",
-      "count": 9.0,
-      "accuracy": 0.7777777777777778
+      "sensitive": "senior",
+      "count": 94.0,
+      "accuracy": 0.7872340425531915
     },
     {
-      "sensitive": "male mar/wid",
-      "count": 12.0,
-      "accuracy": 0.6666666666666666
+      "sensitive": "young",
+      "count": 142.0,
+      "accuracy": 0.8309859154929577
     },
     {
-      "sensitive": "male single",
-      "count": 118.0,
-      "accuracy": 0.7796610169491526
+      "sensitive": "young_adult",
+      "count": 504.0,
+      "accuracy": 0.8055555555555556
     }
   ],
   "cohort_over_time": []

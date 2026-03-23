@@ -64,5 +64,93 @@
       "credit_per_age",
       "savings_status__100"
     ]
+  },
+  {
+    "timestamp": "2026-03-17T03:33:14.235116Z",
+    "best_model": "Ensemble",
+    "roc_auc": 0.7647619047619048,
+    "accuracy": 0.76,
+    "tuned_accuracy": 0.74,
+    "optimal_threshold": 0.34263408938652196,
+    "fair_threshold": 0.75,
+    "cv_auc_mean": 0.7872209821428571,
+    "cv_auc_std": 0.03651875611353225,
+    "fairness_dp": 0.18717948717948718,
+    "fairness_eo": 0.3,
+    "drift_features": 0,
+    "drift_percentage": 0.0,
+    "top_shap": [
+      "checking_status_no_checking",
+      "credit_per_duration",
+      "years_to_repay_ratio",
+      "credit_per_age",
+      "savings_status__100"
+    ]
+  },
+  {
+    "timestamp": "2026-03-17T05:51:11.884463Z",
+    "best_model": "XGBoost",
+    "roc_auc": 0.9956492053807491,
+    "accuracy": 0.9800090184879002,
+    "tuned_accuracy": 0.9812114835412595,
+    "optimal_threshold": 0.5654871463775635,
+    "fair_threshold": 0.55,
+    "cv_auc_mean": 0.9913268813752332,
+    "cv_auc_std": 0.0011045038945528564,
+    "fairness_dp": 0.12771084337349398,
+    "fairness_eo": 0.14391595772106214,
+    "drift_features": 0,
+    "drift_percentage": 0.0,
+    "top_shap": [
+      "interest_rate",
+      "total_loan_costs",
+      "applicant_credit_score_type",
+      "loan_to_value_ratio",
+      "derived_loan_product_type_Conventional_Subordinate_Lien"
+    ]
+  },
+  {
+    "timestamp": "2026-03-17T06:16:10.477701Z",
+    "best_model": "Ensemble",
+    "roc_auc": 0.7698045224768431,
+    "accuracy": 0.8136666666666666,
+    "tuned_accuracy": 0.7878333333333334,
+    "optimal_threshold": 0.282292003169057,
+    "fair_threshold": 0.55,
+    "cv_auc_mean": 0.7661361620840793,
+    "cv_auc_std": 0.004647364649532869,
+    "fairness_dp": 0.0038778597972136397,
+    "fairness_eo": 0.01608466790466484,
+    "drift_features": 1,
+    "drift_percentage": 5.0,
+    "top_shap": [
+      "PAY_0",
+      "LIMIT_BAL",
+      "BILL_AMT1",
+      "PAY_AMT1",
+      "PAY_AMT2"
+    ]
+  },
+  {
+    "timestamp": "2026-03-22T08:57:04.050398Z",
+    "best_model": "Ensemble",
+    "roc_auc": 0.7698045224768431,
+    "accuracy": 0.8136666666666666,
+    "tuned_accuracy": 0.7878333333333334,
+    "optimal_threshold": 0.282292003169057,
+    "fair_threshold": 0.55,
+    "cv_auc_mean": 0.7661361620840793,
+    "cv_auc_std": 0.004647364649532869,
+    "fairness_dp": 0.08602286116093008,
+    "fairness_eo": 0.14285714285714285,
+    "drift_features": 1,
+    "drift_percentage": 5.0,
+    "top_shap": [
+      "PAY_0",
+      "LIMIT_BAL",
+      "BILL_AMT1",
+      "PAY_AMT1",
+      "PAY_AMT2"
+    ]
   }
 ]

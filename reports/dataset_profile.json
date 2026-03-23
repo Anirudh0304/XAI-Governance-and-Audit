@@ -1,210 +1,351 @@
 {
-  "rows": 1000,
-  "columns": 21,
+  "rows": 30000,
+  "columns": 24,
   "target": "default",
   "target_counts": {
-    "good": 700,
-    "bad": 300
+    "0": 23364,
+    "1": 6636
   },
   "dtypes": {
-    "checking_status": "object",
-    "duration": "int64",
-    "credit_history": "object",
-    "purpose": "object",
-    "credit_amount": "int64",
-    "savings_status": "object",
-    "employment": "object",
-    "installment_commitment": "int64",
-    "personal_status": "object",
-    "other_parties": "object",
-    "residence_since": "int64",
-    "property_magnitude": "object",
-    "age": "int64",
-    "other_payment_plans": "object",
-    "housing": "object",
-    "existing_credits": "int64",
-    "job": "object",
-    "num_dependents": "int64",
-    "own_telephone": "object",
-    "foreign_worker": "object",
-    "default": "object"
+    "LIMIT_BAL": "int64",
+    "SEX": "object",
+    "EDUCATION": "object",
+    "MARRIAGE": "object",
+    "AGE": "int64",
+    "PAY_0": "int64",
+    "PAY_2": "int64",
+    "PAY_3": "int64",
+    "PAY_4": "int64",
+    "PAY_5": "int64",
+    "PAY_6": "int64",
+    "BILL_AMT1": "int64",
+    "BILL_AMT2": "int64",
+    "BILL_AMT3": "int64",
+    "BILL_AMT4": "int64",
+    "BILL_AMT5": "int64",
+    "BILL_AMT6": "int64",
+    "PAY_AMT1": "int64",
+    "PAY_AMT2": "int64",
+    "PAY_AMT3": "int64",
+    "PAY_AMT4": "int64",
+    "PAY_AMT5": "int64",
+    "PAY_AMT6": "int64",
+    "default": "int64"
   },
   "missingness_percent_top": {},
   "numeric_summary": {
-    "duration": {
-      "count": 1000.0,
-      "mean": 20.903,
-      "std": 12.058814452756375,
-      "min": 4.0,
-      "25%": 12.0,
-      "50%": 18.0,
-      "75%": 24.0,
-      "max": 72.0
+    "LIMIT_BAL": {
+      "count": 30000.0,
+      "mean": 167484.32266666667,
+      "std": 129747.66156720239,
+      "min": 10000.0,
+      "25%": 50000.0,
+      "50%": 140000.0,
+      "75%": 240000.0,
+      "max": 1000000.0
     },
-    "credit_amount": {
-      "count": 1000.0,
-      "mean": 3271.258,
-      "std": 2822.7368759604406,
-      "min": 250.0,
-      "25%": 1365.5,
-      "50%": 2319.5,
-      "75%": 3972.25,
-      "max": 18424.0
+    "AGE": {
+      "count": 30000.0,
+      "mean": 35.4855,
+      "std": 9.217904068090188,
+      "min": 21.0,
+      "25%": 28.0,
+      "50%": 34.0,
+      "75%": 41.0,
+      "max": 79.0
     },
-    "installment_commitment": {
-      "count": 1000.0,
-      "mean": 2.973,
-      "std": 1.1187146743126786,
-      "min": 1.0,
-      "25%": 2.0,
-      "50%": 3.0,
-      "75%": 4.0,
-      "max": 4.0
+    "PAY_0": {
+      "count": 30000.0,
+      "mean": -0.0167,
+      "std": 1.1238015279973348,
+      "min": -2.0,
+      "25%": -1.0,
+      "50%": 0.0,
+      "75%": 0.0,
+      "max": 8.0
     },
-    "residence_since": {
-      "count": 1000.0,
-      "mean": 2.845,
-      "std": 1.1037178956568536,
-      "min": 1.0,
-      "25%": 2.0,
-      "50%": 3.0,
-      "75%": 4.0,
-      "max": 4.0
+    "PAY_2": {
+      "count": 30000.0,
+      "mean": -0.13376666666666667,
+      "std": 1.1971859730345533,
+      "min": -2.0,
+      "25%": -1.0,
+      "50%": 0.0,
+      "75%": 0.0,
+      "max": 8.0
     },
-    "age": {
-      "count": 1000.0,
-      "mean": 35.546,
-      "std": 11.375468574317512,
-      "min": 19.0,
-      "25%": 27.0,
-      "50%": 33.0,
-      "75%": 42.0,
-      "max": 75.0
+    "PAY_3": {
+      "count": 30000.0,
+      "mean": -0.1662,
+      "std": 1.1968675684465735,
+      "min": -2.0,
+      "25%": -1.0,
+      "50%": 0.0,
+      "75%": 0.0,
+      "max": 8.0
     },
-    "existing_credits": {
-      "count": 1000.0,
-      "mean": 1.407,
-      "std": 0.5776544682461002,
-      "min": 1.0,
-      "25%": 1.0,
-      "50%": 1.0,
-      "75%": 2.0,
-      "max": 4.0
+    "PAY_4": {
+      "count": 30000.0,
+      "mean": -0.22066666666666668,
+      "std": 1.1691386224023375,
+      "min": -2.0,
+      "25%": -1.0,
+      "50%": 0.0,
+      "75%": 0.0,
+      "max": 8.0
     },
-    "num_dependents": {
-      "count": 1000.0,
-      "mean": 1.155,
-      "std": 0.36208577175319395,
-      "min": 1.0,
-      "25%": 1.0,
-      "50%": 1.0,
-      "75%": 1.0,
-      "max": 2.0
+    "PAY_5": {
+      "count": 30000.0,
+      "mean": -0.2662,
+      "std": 1.1331874060027483,
+      "min": -2.0,
+      "25%": -1.0,
+      "50%": 0.0,
+      "75%": 0.0,
+      "max": 8.0
+    },
+    "PAY_6": {
+      "count": 30000.0,
+      "mean": -0.2911,
+      "std": 1.1499876256079027,
+      "min": -2.0,
+      "25%": -1.0,
+      "50%": 0.0,
+      "75%": 0.0,
+      "max": 8.0
+    },
+    "BILL_AMT1": {
+      "count": 30000.0,
+      "mean": 51223.3309,
+      "std": 73635.86057552956,
+      "min": -165580.0,
+      "25%": 3558.75,
+      "50%": 22381.5,
+      "75%": 67091.0,
+      "max": 964511.0
+    },
+    "BILL_AMT2": {
+      "count": 30000.0,
+      "mean": 49179.07516666667,
+      "std": 71173.76878252835,
+      "min": -69777.0,
+      "25%": 2984.75,
+      "50%": 21200.0,
+      "75%": 64006.25,
+      "max": 983931.0
+    },
+    "BILL_AMT3": {
+      "count": 30000.0,
+      "mean": 47013.1548,
+      "std": 69349.38742703684,
+      "min": -157264.0,
+      "25%": 2666.25,
+      "50%": 20088.5,
+      "75%": 60164.75,
+      "max": 1664089.0
+    },
+    "BILL_AMT4": {
+      "count": 30000.0,
+      "mean": 43262.94896666666,
+      "std": 64332.85613391631,
+      "min": -170000.0,
+      "25%": 2326.75,
+      "50%": 19052.0,
+      "75%": 54506.0,
+      "max": 891586.0
+    },
+    "BILL_AMT5": {
+      "count": 30000.0,
+      "mean": 40311.40096666667,
+      "std": 60797.15577026487,
+      "min": -81334.0,
+      "25%": 1763.0,
+      "50%": 18104.5,
+      "75%": 50190.5,
+      "max": 927171.0
+    },
+    "BILL_AMT6": {
+      "count": 30000.0,
+      "mean": 38871.7604,
+      "std": 59554.10753674573,
+      "min": -339603.0,
+      "25%": 1256.0,
+      "50%": 17071.0,
+      "75%": 49198.25,
+      "max": 961664.0
+    },
+    "PAY_AMT1": {
+      "count": 30000.0,
+      "mean": 5663.5805,
+      "std": 16563.280354025766,
+      "min": 0.0,
+      "25%": 1000.0,
+      "50%": 2100.0,
+      "75%": 5006.0,
+      "max": 873552.0
+    },
+    "PAY_AMT2": {
+      "count": 30000.0,
+      "mean": 5921.1635,
+      "std": 23040.870402057237,
+      "min": 0.0,
+      "25%": 833.0,
+      "50%": 2009.0,
+      "75%": 5000.0,
+      "max": 1684259.0
+    },
+    "PAY_AMT3": {
+      "count": 30000.0,
+      "mean": 5225.6815,
+      "std": 17606.961469803104,
+      "min": 0.0,
+      "25%": 390.0,
+      "50%": 1800.0,
+      "75%": 4505.0,
+      "max": 896040.0
+    },
+    "PAY_AMT4": {
+      "count": 30000.0,
+      "mean": 4826.076866666666,
+      "std": 15666.159744032007,
+      "min": 0.0,
+      "25%": 296.0,
+      "50%": 1500.0,
+      "75%": 4013.25,
+      "max": 621000.0
+    },
+    "PAY_AMT5": {
+      "count": 30000.0,
+      "mean": 4799.387633333334,
+      "std": 15278.30567914479,
+      "min": 0.0,
+      "25%": 252.5,
+      "50%": 1500.0,
+      "75%": 4031.5,
+      "max": 426529.0
+    },
+    "PAY_AMT6": {
+      "count": 30000.0,
+      "mean": 5215.502566666667,
+      "std": 17777.4657754353,
+      "min": 0.0,
+      "25%": 117.75,
+      "50%": 1500.0,
+      "75%": 4000.0,
+      "max": 528666.0
+    },
+    "default": {
+      "count": 30000.0,
+      "mean": 0.2212,
+      "std": 0.41506180569093337,
+      "min": 0.0,
+      "25%": 0.0,
+      "50%": 0.0,
+      "75%": 0.0,
+      "max": 1.0
     }
   },
   "top_abs_correlations": [
     {
-      "col1": "duration",
-      "col2": "credit_amount",
-      "abs_corr": 0.6249841983009851
+      "col1": "BILL_AMT1",
+      "col2": "BILL_AMT2",
+      "abs_corr": 0.9514836727518136
     },
     {
-      "col1": "credit_amount",
-      "col2": "installment_commitment",
-      "abs_corr": 0.271315701246002
+      "col1": "BILL_AMT5",
+      "col2": "BILL_AMT6",
+      "abs_corr": 0.9461968070521957
     },
     {
-      "col1": "residence_since",
-      "col2": "age",
-      "abs_corr": 0.266419183969461
+      "col1": "BILL_AMT4",
+      "col2": "BILL_AMT5",
+      "abs_corr": 0.9401344040880004
     },
     {
-      "col1": "age",
-      "col2": "existing_credits",
-      "abs_corr": 0.14925358219009058
+      "col1": "BILL_AMT2",
+      "col2": "BILL_AMT3",
+      "abs_corr": 0.9283262592714855
     },
     {
-      "col1": "age",
-      "col2": "num_dependents",
-      "abs_corr": 0.11820083281906714
+      "col1": "BILL_AMT3",
+      "col2": "BILL_AMT4",
+      "abs_corr": 0.9239694565909823
     },
     {
-      "col1": "existing_credits",
-      "col2": "num_dependents",
-      "abs_corr": 0.10966670041593389
+      "col1": "BILL_AMT4",
+      "col2": "BILL_AMT6",
+      "abs_corr": 0.9009409547978421
     },
     {
-      "col1": "residence_since",
-      "col2": "existing_credits",
-      "abs_corr": 0.08962523262254277
+      "col1": "BILL_AMT2",
+      "col2": "BILL_AMT4",
+      "abs_corr": 0.8924822912577209
     },
     {
-      "col1": "duration",
-      "col2": "installment_commitment",
-      "abs_corr": 0.07474881629117033
+      "col1": "BILL_AMT1",
+      "col2": "BILL_AMT3",
+      "abs_corr": 0.8922785291271761
     },
     {
-      "col1": "installment_commitment",
-      "col2": "num_dependents",
-      "abs_corr": 0.0712069430082334
+      "col1": "BILL_AMT3",
+      "col2": "BILL_AMT5",
+      "abs_corr": 0.8839096973620155
     },
     {
-      "col1": "installment_commitment",
-      "col2": "age",
-      "abs_corr": 0.0582656843514099
+      "col1": "BILL_AMT1",
+      "col2": "BILL_AMT4",
+      "abs_corr": 0.8602721890293095
     },
     {
-      "col1": "installment_commitment",
-      "col2": "residence_since",
-      "abs_corr": 0.04930237081388658
+      "col1": "BILL_AMT2",
+      "col2": "BILL_AMT5",
+      "abs_corr": 0.859778307271445
     },
     {
-      "col1": "residence_since",
-      "col2": "num_dependents",
-      "abs_corr": 0.04264342597522536
+      "col1": "BILL_AMT3",
+      "col2": "BILL_AMT6",
+      "abs_corr": 0.8533200905940468
     },
     {
-      "col1": "duration",
-      "col2": "age",
-      "abs_corr": 0.03613637401909835
+      "col1": "BILL_AMT2",
+      "col2": "BILL_AMT6",
+      "abs_corr": 0.8315935591018213
     },
     {
-      "col1": "duration",
-      "col2": "residence_since",
-      "abs_corr": 0.03406720161114831
+      "col1": "BILL_AMT1",
+      "col2": "BILL_AMT5",
+      "abs_corr": 0.8297786058330013
     },
     {
-      "col1": "credit_amount",
-      "col2": "age",
-      "abs_corr": 0.032716416665448014
+      "col1": "PAY_4",
+      "col2": "PAY_5",
+      "abs_corr": 0.8198353114868158
     },
     {
-      "col1": "credit_amount",
-      "col2": "residence_since",
-      "abs_corr": 0.028926323080232533
+      "col1": "PAY_5",
+      "col2": "PAY_6",
+      "abs_corr": 0.8169001604176753
     },
     {
-      "col1": "duration",
-      "col2": "num_dependents",
-      "abs_corr": 0.023834475397621752
+      "col1": "BILL_AMT1",
+      "col2": "BILL_AMT6",
+      "abs_corr": 0.8026501885528455
     },
     {
-      "col1": "installment_commitment",
-      "col2": "existing_credits",
-      "abs_corr": 0.0216687425713283
+      "col1": "PAY_3",
+      "col2": "PAY_4",
+      "abs_corr": 0.7773588733012726
     },
     {
-      "col1": "credit_amount",
-      "col2": "existing_credits",
-      "abs_corr": 0.020794551748965877
+      "col1": "PAY_2",
+      "col2": "PAY_3",
+      "abs_corr": 0.7665516829341017
     },
     {
-      "col1": "credit_amount",
-      "col2": "num_dependents",
-      "abs_corr": 0.017142154158463888
+      "col1": "PAY_4",
+      "col2": "PAY_6",
+      "abs_corr": 0.7164494815807845
     }
   ],
-  "suggested_sensitive_columns": [
-    "age"
-  ]
+  "suggested_sensitive_columns": []
 }
