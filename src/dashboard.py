@@ -195,7 +195,7 @@ else:
                     "ROC AUC":      round(m.get("roc_auc", 0), 4),
                     "Best ✓":       "✓" if name == best_name else "",
                 })
-            st.dataframe(pd.DataFrame(comparison_rows), use_container_width=True)
+            st.dataframe(pd.DataFrame(comparison_rows), width='stretch')
 
             col1, col2 = st.columns(2)
             with col1:
@@ -240,7 +240,7 @@ else:
                         title="Accuracy vs Threshold",
                         xaxis_title="Threshold", yaxis_title="Accuracy", height=400
                     )
-                    st.plotly_chart(fig_acc, use_container_width=True)
+                    st.plotly_chart(fig_acc, width='stretch')
 
                 with col2:
                     fig_dp = go.Figure()
@@ -255,7 +255,7 @@ else:
                         title="Demographic Parity vs Threshold",
                         xaxis_title="Threshold", yaxis_title="DP Difference", height=400
                     )
-                    st.plotly_chart(fig_dp, use_container_width=True)
+                    st.plotly_chart(fig_dp, width='stretch')
 
                 with col3:
                     fig_eo = go.Figure()
@@ -270,10 +270,10 @@ else:
                         title="Equalized Odds vs Threshold",
                         xaxis_title="Threshold", yaxis_title="EO Difference", height=400
                     )
-                    st.plotly_chart(fig_eo, use_container_width=True)
+                    st.plotly_chart(fig_eo, width='stretch')
 
                 st.subheader("Threshold Analysis Details")
-                st.dataframe(ta_df.round(4), use_container_width=True)
+                st.dataframe(ta_df.round(4), width='stretch')
 
             # ----------------------------------------------------------------
             # Data Drift
@@ -303,7 +303,7 @@ else:
                                 "Drift":        "✓",
                             })
                     if drift_rows:
-                        st.dataframe(pd.DataFrame(drift_rows), use_container_width=True)
+                        st.dataframe(pd.DataFrame(drift_rows), width='stretch')
 
             # ----------------------------------------------------------------
             # Fairness Metrics
@@ -529,7 +529,7 @@ else:
         ]
         if c in hist_df.columns
     ]
-    st.dataframe(hist_df[display_cols].tail(10), use_container_width=True)
+    st.dataframe(hist_df[display_cols].tail(10), width='stretch')
 
 
 # ---------------------------------------------------------------------------

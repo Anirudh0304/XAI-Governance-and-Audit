@@ -6,3 +6,4 @@ artifacts/
 reports/*.pdf
 .ipynb_checkpoints/
 .env
+data/

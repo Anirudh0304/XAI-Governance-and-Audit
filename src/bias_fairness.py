@@ -51,7 +51,7 @@ def _compute_eo(y_true: np.ndarray, y_pred: np.ndarray,
 
 
 def bootstrap_fairness_ci(y_true, y_pred, sensitive,
-                           n_bootstrap: int = 1000,
+                           n_bootstrap: int = 100,
                            ci: int = 95,
                            random_state: int = 42) -> dict:
     """
@@ -62,7 +62,7 @@ def bootstrap_fairness_ci(y_true, y_pred, sensitive,
         y_true:       True labels
         y_pred:       Predicted labels
         sensitive:    Sensitive attribute values (already binned)
-        n_bootstrap:  Number of bootstrap resamples (default 1000)
+        n_bootstrap:  Number of bootstrap resamples (default 100)
         ci:           Confidence level in % (default 95)
         random_state: Random seed for reproducibility
 
@@ -102,7 +102,7 @@ def bootstrap_fairness_ci(y_true, y_pred, sensitive,
 
 def evaluate_fairness(y_true, y_pred, sensitive,
                       compute_ci: bool = True,
-                      n_bootstrap: int = 1000) -> dict:
+                      n_bootstrap: int = 100) -> dict:
     """
     Evaluate fairness metrics with optional bootstrap confidence intervals.
 

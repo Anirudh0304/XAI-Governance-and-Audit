@@ -151,7 +151,7 @@ def find_fair_threshold(y_true, y_prob, sensitive, fairness_limit: float = 0.2) 
     best_accuracy = 0.0
 
     for t in np.linspace(0.1, 0.9, 17):
-        y_pred = (y_prob >= t).astype(int)
+        y_pred = (np.clip(y_prob, 0, 1) >= t).astype(int)
         acc = accuracy_score(y_true, y_pred)
         fairness = evaluate_fairness(y_true, y_pred, sensitive)
         bias = abs(fairness.get("demographic_parity_difference", 1.0))
@@ -168,7 +168,7 @@ def analyze_threshold_tradeoff(y_true, y_prob, sensitive) -> List[Dict]:
 
     results = []
     for t in np.linspace(0.1, 0.9, 17):
-        y_pred = (y_prob >= t).astype(int)
+        y_pred = (np.clip(y_prob, 0, 1) >= t).astype(int)
         acc = accuracy_score(y_true, y_pred)
         fairness = evaluate_fairness(y_true, y_pred, sensitive)
         results.append({
@@ -216,7 +216,6 @@ def tune_and_train_xgb(X_train, y_train, random_state: int = 42) -> xgb.XGBClass
         random_state=random_state,
         eval_metric="auc",
         tree_method="hist",
-        use_label_encoder=False,
     )
 
     search = RandomizedSearchCV(
@@ -242,7 +241,6 @@ def tune_and_train_xgb(X_train, y_train, random_state: int = 42) -> xgb.XGBClass
         eval_metric="auc",
         early_stopping_rounds=40,
         tree_method="hist",
-        use_label_encoder=False,
     )
     final_model.fit(
         X_tr, y_tr,

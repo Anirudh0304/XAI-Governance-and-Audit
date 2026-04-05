@@ -3,6 +3,7 @@ Governance Assistant — LLM-powered Q&A over audit report data.
 Uses Groq's free API with llama-3.3-70b-versatile.
 """
 import json
+import os
 from pathlib import Path
 from groq import Groq
 
@@ -18,7 +19,7 @@ def ask_governance_assistant(question: str, audit_bundle: dict) -> str:
     Returns:
         LLM response as a string
     """
-    client = Groq(api_key="my api key")  # ← Replace with your key
+    client = Groq(api_key=os.environ.get('GROQ_API_KEY'))  # Set GROQ_API_KEY environment variable
 
     # Extract all relevant sections from audit bundle
     model_metrics  = audit_bundle['artifacts'].get('model_metrics', {}) or {}
