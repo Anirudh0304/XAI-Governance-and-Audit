@@ -152,5 +152,27 @@
       "PAY_AMT1",
       "PAY_AMT2"
     ]
+  },
+  {
+    "timestamp": "2026-04-06T19:12:03.041777Z",
+    "best_model": "Ensemble",
+    "roc_auc": 0.7548807373175096,
+    "accuracy": 0.919547331794088,
+    "tuned_accuracy": 0.8517934376117849,
+    "optimal_threshold": 0.15530066606543408,
+    "fair_threshold": 0.45000000000000007,
+    "cv_auc_mean": 0.7238989220504084,
+    "cv_auc_std": 0.0024723933357372464,
+    "fairness_dp": 0.005328460849033366,
+    "fairness_eo": 0.02419152999851782,
+    "drift_features": 1,
+    "drift_percentage": 0.6756756756756757,
+    "top_shap": [
+      "AMT_GOODS_PRICE",
+      "EXT_SOURCE_3",
+      "AMT_CREDIT",
+      "EXT_SOURCE_2",
+      "EXT_SOURCE_1"
+    ]
   }
 ]

@@ -2,24 +2,14 @@
   "psi": {},
   "bucket_performance": [
     {
-      "sensitive": "middle_aged",
-      "count": 447.0,
-      "accuracy": 0.7941834451901566
+      "sensitive": 0,
+      "count": 25385.0,
+      "accuracy": 0.8992318298207603
     },
     {
-      "sensitive": "senior",
-      "count": 94.0,
-      "accuracy": 0.7872340425531915
-    },
-    {
-      "sensitive": "young",
-      "count": 142.0,
-      "accuracy": 0.8309859154929577
-    },
-    {
-      "sensitive": "young_adult",
-      "count": 504.0,
-      "accuracy": 0.8055555555555556
+      "sensitive": 1,
+      "count": 36117.0,
+      "accuracy": 0.9343799318880306
     }
   ],
   "cohort_over_time": []

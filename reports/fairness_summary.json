@@ -1,4 +1,10 @@
 {
-  "demographic_parity_difference": 0.08602286116093008,
-  "equalized_odds_difference": 0.14285714285714285
+  "demographic_parity_difference": 0.005328460849033366,
+  "equalized_odds_difference": 0.02419152999851782,
+  "dp_ci_lower": 0.004412638858267041,
+  "dp_ci_upper": 0.006214204946667408,
+  "eo_ci_lower": 0.018175110467205526,
+  "eo_ci_upper": 0.033572642946306026,
+  "ci_level": 95,
+  "n_bootstrap": 100
 }
